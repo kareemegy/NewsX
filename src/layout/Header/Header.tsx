@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUI } from "../../contexts/UIContext";
 
@@ -6,16 +7,29 @@ const Header = () => {
   const { toggleTheme, theme } = useTheme();
   return (
     <div
-      className={`fixed inset-x-0  h-16 z-10 bg-${theme}-primary`}
+      className={`fixed inset-x-0  h-16 z-10 bg-${theme}-secondary flex justify-between items-center`}
     >
-      <h1>Header</h1>
+      <h1>LOGO</h1>
       <div
         className="sm:hidden"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         open sidebar
       </div>
-      <div onClick={() => toggleTheme()}>toggle theme</div>
+      <input
+        className="rounded-lg outline-none w-60 p-1.5 shadow"
+        type="search"
+      />
+      <div
+        className={cn(
+          "w-fit h-fit rounded-full p-2 transition-all duration-300 ease-out cursor-pointer ",
+          { "bg-light-secondary": theme == "light" },
+          { "bg-dark-secondary": theme == "dark" }
+        )}
+        onClick={() => toggleTheme()}
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </div>
     </div>
   );
 };

@@ -12,23 +12,23 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        " fixed transition-all duration-300 flex h-screen top-[64px] inset-y-0 ",
+        " fixed transition-all duration-300 flex h-screen top-[64px] inset-y-0 shadow-dark-md  ",
         {
           "left-0": isSidebarOpen,
           "-left-full sm:left-0": !isSidebarOpen,
-        }
+        },
+        { "bg-light-primary": theme == "light" },
+        { "bg-dark-primary": theme == "dark" }
       )}
     >
       <CollapseMenuButton />
       <div
         className={cn(
-          "bg-red-400  h-full overflow-hidden transition-all ease-in-out duration-500  delay-100",
+          " h-full overflow-hidden transition-all ease-in-out duration-500  delay-100",
           {
             "w-16": isMenuShrunk,
             "w-60": !isMenuShrunk,
-          },
-          { "bg-light-primary": theme == "light" },
-          { "bg-dark-primary": theme == "dark" }
+          }
         )}
       >
         <List />
