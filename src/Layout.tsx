@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { useTheme } from "./contexts/ThemeContext";
 import { useUI } from "./contexts/UIContext";
 import Header from "./layout/Header/";
 import Sidebar from "./layout/Sidebar";
@@ -6,15 +7,17 @@ import RoutesWrapper from "./RoutesWrapper";
 
 const Layout = () => {
   const { isMenuShrunk } = useUI();
+  const { theme } = useTheme();
+  console.log(theme);
 
   return (
     <div>
       <Header />
-      <main className="flex w-full h-full">
+      <main className={`flex w-full h-full bg-${theme}-primary`}>
         <Sidebar />
         <Wrapper
           className={cn(
-            "ml-auto transition-all duration-200 delay-150 mt-[64px] ",
+            "ml-auto transition-all duration-200 delay-150 mt-[64px] bg-grey  ",
             {
               "sm:w-[calc(100%-240px)]": !isMenuShrunk,
               "sm:w-[calc(100%-64px)]": isMenuShrunk,

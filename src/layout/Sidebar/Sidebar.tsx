@@ -1,17 +1,18 @@
 import cn from "classnames";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Heading from "../../components/Heading";
 import SIDEBAR_MENUS from "./news.constants";
-import { UIContext, useUI } from "../../contexts/UIContext";
+import { useUI } from "../../contexts/UIContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const Sidebar = () => {
   const { isMenuShrunk, isSidebarOpen } = useUI();
+  const { theme } = useTheme();
   return (
     <aside
       className={cn(
-        " fixed transition-all duration-300 flex h-screen top-[64px] inset-y-0",
+        " fixed transition-all duration-300 flex h-screen top-[64px] inset-y-0 ",
         {
           "left-0": isSidebarOpen,
           "-left-full sm:left-0": !isSidebarOpen,
@@ -25,7 +26,9 @@ const Sidebar = () => {
           {
             "w-16": isMenuShrunk,
             "w-60": !isMenuShrunk,
-          }
+          },
+          { "bg-light-primary": theme == "light" },
+          { "bg-dark-primary": theme == "dark" }
         )}
       >
         <List />
