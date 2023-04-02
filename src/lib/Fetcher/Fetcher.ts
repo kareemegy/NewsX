@@ -11,6 +11,7 @@ class Fetcher {
       headers: {
         "Content-Type": "application/json",
         "X-Api-Key": this.apiKey,
+        "Access-Control-Allow-Origin": "*",
       },
     };
 
