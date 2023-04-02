@@ -1,28 +1,25 @@
 class Fetcher {
   private baseURL: string = import.meta.env.VITE_NEWS_BASE_URL;
   private apiKey: string = import.meta.env.VITE_NEWS_API_KEY;
-constructor() {
+  constructor() {
     this.baseURL = import.meta.env.VITE_NEWS_BASE_URL;
     this.apiKey = import.meta.env.VITE_NEWS_API_KEY;
+    console.log("Fetcher", this.baseURL, this.apiKey);
   }
   fetchBase = async (url: string, request?: RequestInit) => {
     const requestOptions = {
       headers: {
         "Content-Type": "application/json",
+        "X-Api-Key": this.apiKey,
       },
     };
 
-    if (request) {
-      Object.assign(requestOptions, request);
-    }
+    // Object.assign(requestOptions, request);
+    // if (request) {
+    // }
 
     let endpoint = `${this.baseURL}${url}`;
-    if (url.includes("?")) {
-      endpoint = `${endpoint}&apiKey=${this.apiKey}`;
-    } else {
-      endpoint = `${endpoint}?apiKey=${this.apiKey}`;
-    }
-    return await fetch(endpoint, request);
+    return await fetch(endpoint, requestOptions);
   };
 }
 

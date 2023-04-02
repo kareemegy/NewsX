@@ -7,12 +7,9 @@ export const getNews = async (
   controller: AbortController
 ) => {
   try {
-    const response = await fetcher(
-      `everything?q=${topic}&sortBy=popularity&pageSize=20&page=${page}`,
-      {
-        signal: controller.signal,
-      }
-    );
+    const response = await fetcher(`?q=${topic}&page_size=50&page=${page}`, {
+      signal: controller.signal,
+    });
 
     return formattedOutput(response, (data: any) => data.articles);
   } catch (err: any) {
