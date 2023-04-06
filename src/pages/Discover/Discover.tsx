@@ -60,17 +60,17 @@ export const Discover = () => {
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center w-full">
-        {news?.map(({ title, urlToImage, url, content, author, source }, i) => {
+        {news?.map((news, i) => {
           if (news.length === i + 1) {
             return (
               <div key={i} ref={lastElementRef}>
-                <Card title={title} image={urlToImage} as="article" />
+                <Card news={news}  as="article" />
               </div>
             );
           }
           return (
             <div key={i}>
-              <Card title={title} image={urlToImage} as="article" />
+              <Card news={news}  as="article" />
             </div>
           );
         })}
