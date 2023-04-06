@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useUI } from "../../contexts/UIContext";
-import { useRef } from "react";
+import { JSXElementConstructor, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -15,7 +15,13 @@ const Header = () => {
       navigate(`/search/${inputValue}`);
       inputRef.current.value = "";
     };
-
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit();
+      }
+    };
     return (
       <div className="relative w-[500px]">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -41,6 +47,7 @@ const Header = () => {
           className="block w-full p-4 pl-10 text-sm outline-none text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search Mockups, Logos..."
           ref={inputRef}
+          onKeyDown={handleKeyDown}
         />
         <button
           type="submit"
