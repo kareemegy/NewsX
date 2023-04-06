@@ -3,8 +3,9 @@ import Stack from "../Stack";
 import { useEffect, useRef, useState } from "react";
 
 interface ICard {
-  news: Object;
   children?: React.ReactNode;
+  articles?: any;
+  index?: any;
   as?: React.ElementType;
 }
 interface IModal {
@@ -22,15 +23,21 @@ interface IModal {
   _id: string;
 }
 
-const Card = ({ news, children, as }: ICard) => {
+const Card = ({ children, articles, index, as }: ICard) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { title, media } = news as IModal;
+  const [currentIndex, SetCurrentIndex] = useState(index);
+  const { title, media } = articles[index];
+
+  const handleNextArticle = () => {
+    SetCurrentIndex(currentIndex + 1);
+  };
+  const handlePreviousArticle = () => {
+    SetCurrentIndex(currentIndex - 1);
+  };
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
     document.body.style.overflow = "hidden";
-    
-
   };
   return (
     <>
@@ -44,11 +51,25 @@ const Card = ({ news, children, as }: ICard) => {
           {children && <div>{children}</div>}
         </Stack>
       </div>
-      {isOpen && <Modal toggleModal={toggleModal} news={news} />}
+      {isOpen && (
+        <Modal
+          toggleModal={toggleModal}
+          nextArticle={handleNextArticle}
+          previousArticle={handlePreviousArticle}
+          articles={articles}
+          currentIndex={currentIndex}
+        />
+      )}
     </>
   );
 };
-const Modal = ({ news, toggleModal }: any): JSX.Element => {
+const Modal = ({
+  articles,
+  nextArticle,
+  previousArticle,
+  toggleModal,
+  currentIndex,
+}: any): JSX.Element => {
   const {
     title,
     author,
@@ -61,7 +82,7 @@ const Modal = ({ news, toggleModal }: any): JSX.Element => {
     country,
     media,
     _id,
-  } = news as IModal;
+  } = articles[currentIndex] as IModal;
   const modalRef = useRef<any>(null);
   useEffect(() => {
     function handleClickOutside(event: any) {
@@ -78,50 +99,6 @@ const Modal = ({ news, toggleModal }: any): JSX.Element => {
   return (
     <>
       {
-        // <div className="fixed z-10 inset-0 overflow-y-auto">
-        //   <div className="flex items-center justify-center min-h-screen">
-        //     <div
-        //       className="fixed inset-0 transition-opacity"
-        //       aria-hidden="true"
-        //     >
-        //       <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-        //     </div>
-
-        //     <div
-        //       className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
-        //       ref={modalRef}
-        //     >
-        //       <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        //         <div className="sm:flex sm:items-start">
-        //           <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-        //             <h3
-        //               className="text-lg leading-6 font-medium text-gray-900"
-        //               id="modal-title"
-        //             >
-        //               {title}
-        //             </h3>
-        //             <h2 className="text-lg leading-6 font-medium text-gray-800">
-        //               {excerpt}
-        //             </h2>
-
-        //             <div className="mt-2">
-        //               {media && <CardImage className="my-2" src={media} />}
-        //               <p className="text-sm text-gray-500">{summary}</p>
-        //             </div>
-        //           </div>
-        //         </div>
-        //       </div>
-        //       <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        //         <button
-        //           onClick={toggleModal}
-        //           className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-        //         >
-        //           Close
-        //         </button>
-        //       </div>
-        //     </div>
-        //   </div>
-        // </div>
         <div className="fixed z-10 inset-0 overflow-y-auto ">
           <div className="fixed inset-0 bg-gray-500 opacity-50"></div>
           <div className="flex items-center justify-center min-h-screen">
@@ -129,7 +106,10 @@ const Modal = ({ news, toggleModal }: any): JSX.Element => {
               <div className="relative px-8 py-6" ref={modalRef}>
                 <div className="absolute left-0 top-0 ml-5 mt-5 flex justify-between w-[95%]">
                   <div>
-                    <button className="bg-gray-200 rounded-full p-2 mr-5">
+                    <button
+                      className="bg-gray-200 rounded-full p-2 mr-5"
+                      onClick={previousArticle}
+                    >
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
@@ -142,7 +122,10 @@ const Modal = ({ news, toggleModal }: any): JSX.Element => {
                         />
                       </svg>
                     </button>
-                    <button className="bg-gray-200 rounded-full p-2">
+                    <button
+                      className="bg-gray-200 rounded-full p-2"
+                      onClick={nextArticle}
+                    >
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
