@@ -47,7 +47,6 @@ const Card = ({ children, articles, index, as }: ICard) => {
           className="bg-white border border-gray-200 px-4 py-2 h-full rounded-md max-w-xs justify-between"
         >
           <CardTitle>{title}</CardTitle>
-          {/* {media && <CardImage className="my-2" src={media} />} */}
           {
             <CardImage
               className="my-2"
