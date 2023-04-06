@@ -1,6 +1,6 @@
 # NewsX React App
 
-NewsX is a React-based web application that provides you with the latest news and trending stories from various sources. It uses the NewsAPI.org API to fetch data and display it in a clean and user-friendly interface.
+NewsX is a React-based web application that provides you with the latest news and trending stories from various sources. It uses the newscatcherapi API to fetch data and display it in a clean and user-friendly interface.
 
 ## Getting Started
 
@@ -28,7 +28,12 @@ To get started with NewsX, follow these steps:
 
 This will start the app in development mode, and you should be able to access it at `http://localhost:3000`.
 
+## Service Provider 
+
+newscatcherapi API (https://newscatcherapi.com/.) 
+
 ## Features
+
 
 NewsX provides the following features:
 
