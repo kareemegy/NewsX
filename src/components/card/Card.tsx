@@ -107,13 +107,19 @@ const Modal = ({
                 <div className="absolute left-0 top-0 ml-5 mt-5 flex justify-between w-[95%]">
                   <div>
                     <button
-                      className="bg-gray-200 rounded-full p-2 mr-5"
+                      className={cn("bg-gray-200 rounded-full p-2 mr-5", {
+                        "cursor-not-allowed": currentIndex === 0,
+                      })}
                       onClick={previousArticle}
+                      disabled={currentIndex === 0}
                     >
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        className="chevron-left w-6 h-6"
+                        className={cn("chevron-left w-6 h-6", {
+                          "w-6 h-6 fill-current text-gray-400 opacity-50 pointer-events-none":
+                            currentIndex === 0,
+                        })}
                       >
                         <path
                           fillRule="evenodd"

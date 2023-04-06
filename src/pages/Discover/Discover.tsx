@@ -60,7 +60,7 @@ export const Discover = () => {
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center w-full">
-        {news?.map((data, i) => {
+        {news?.map((_, i) => {
           if (news.length === i + 1) {
             return (
               <div key={i} ref={lastElementRef}>
