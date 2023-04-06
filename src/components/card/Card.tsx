@@ -47,7 +47,17 @@ const Card = ({ children, articles, index, as }: ICard) => {
           className="bg-white border border-gray-200 px-4 py-2 h-full rounded-md max-w-xs justify-between"
         >
           <CardTitle>{title}</CardTitle>
-          {media && <CardImage className="my-2" src={media} />}
+          {/* {media && <CardImage className="my-2" src={media} />} */}
+          {
+            <CardImage
+              className="my-2"
+              src={
+                media
+                  ? media
+                  : "https://www.russorizio.com/wp-content/uploads/2016/07/ef3-placeholder-image.jpg"
+              }
+            />
+          }
           {children && <div>{children}</div>}
         </Stack>
       </div>
@@ -153,14 +163,14 @@ const Modal = ({
                     </a>
                   </div>
                 </div>
-                <div className="text-center mt-20">
+                <div className="text-center mt-20 h-[100px]">
                   <h1 className="text-3xl font-bold text-gray-900 mb-6 text-start">
                     {title}
                   </h1>
                 </div>
-                <div className="my-8">
+                <div className="my-8 h-[100px]">
                   <h3 className="font-semibold text-gray-800 mb-4 ">
-                    {summary}
+                    {summary.slice(0, 300)}
                   </h3>
                 </div>
                 <div className="my-8">
@@ -252,7 +262,9 @@ interface ICardTitle {
   className?: string;
 }
 const CardTitle = ({ children, className }: ICardTitle) => (
-  <h4 className={cn("font-bold text-xl h-[50px] overflow-hidden", className)}>{children}</h4>
+  <h4 className={cn("font-bold text-xl h-[50px] overflow-hidden", className)}>
+    {children}
+  </h4>
 );
 
 interface ICardImage {
