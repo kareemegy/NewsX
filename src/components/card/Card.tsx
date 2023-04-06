@@ -1,23 +1,111 @@
 import cn from "classnames";
 import Stack from "../Stack";
+import { useState } from "react";
 
 interface ICard {
-  title: string;
-  image: string;
+  news: Object;
   children?: React.ReactNode;
-  as?: string;
+  as?: React.ElementType;
+}
+interface IModal {
+  title: string;
+  author: string;
+  image: string;
+  published_date: string;
+  link: string;
+  excerpt: string;
+  summary: string;
+  rights: string;
+  topic: string;
+  country: string;
+  media: string;
+  _id: string;
 }
 
-const Card = ({ title, image, children, as }: ICard) => {
+const Card = ({ news, children, as }: ICard) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { title, media } = news as IModal;
+
+  console.log(news, media);
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
   return (
-    <Stack
-      as={as}
-      className="bg-white border border-gray-200 px-4 py-2 h-full rounded-md max-w-xs justify-between"
-    >
-      <CardTitle>{title}</CardTitle>
-      {image && <CardImage className="my-2" src={image} />}
-      {children && <div>{children}</div>}
-    </Stack>
+    <div onClick={toggleModal} className="cursor-pointer">
+      <Stack
+        as={as}
+        className="bg-white border border-gray-200 px-4 py-2 h-full rounded-md max-w-xs justify-between"
+      >
+        <CardTitle>{title}</CardTitle>
+        {media && <CardImage className="my-2" src={media} />}
+        {children && <div>{children}</div>}
+      </Stack>
+      {isOpen && <Modal toggleModal={toggleModal} news={news} />}
+    </div>
+  );
+};
+const Modal = ({ news, toggleModal }: any): JSX.Element => {
+  const {
+    title,
+    author,
+    published_date,
+    link,
+    excerpt,
+    summary,
+    rights,
+    topic,
+    country,
+    media,
+    _id,
+  } = news as IModal;
+
+  return (
+    <>
+      {
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen">
+            <div
+              className="fixed inset-0 transition-opacity"
+              aria-hidden="true"
+            >
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3
+                      className="text-lg leading-6 font-medium text-gray-900"
+                      id="modal-title"
+                    >
+                      {title}
+                    </h3>
+                    <h2 className="text-lg leading-6 font-medium text-gray-800">
+                      {excerpt}
+                    </h2>
+
+                    <div className="mt-2">
+                      {media && <CardImage className="my-2" src={media} />}
+                      <p className="text-sm text-gray-500">{summary}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  onClick={toggleModal}
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </>
   );
 };
 

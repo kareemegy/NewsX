@@ -4,7 +4,6 @@ import Card from "../../components/card";
 import { getNews } from "../../lib/newsApi";
 
 export const Topics = () => {
-
   const { topic } = useParams();
   const [news, setNews] = useState<any[]>([]);
   const [isLoading, setLoading] = useState(false);
@@ -25,6 +24,7 @@ export const Topics = () => {
           }, 3000);
         }
       });
+
       if (node) observerRef.current.observe(node);
     },
     [isLoading]
@@ -61,24 +61,26 @@ export const Topics = () => {
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center w-full">
-        {news?.map(({ title, media }, i) => {
+        {news?.map((news, i) => {
           if (news.length === i + 1) {
             return (
               <div key={i} ref={lastElementRef}>
-                <Card title={title} image={media} as="article" />
+                <Card news={news}  as="article" />
               </div>
             );
           }
           return (
             <div key={i}>
-              <Card title={title} image={media} as="article" />
+              <Card news={news}  as="article" />
             </div>
           );
         })}
-        {isLoading && Array.from({ length: 20 }).map((_, i) => <Card.loader key={i} />)}
+        {isLoading &&
+          Array.from({ length: 20 }).map((_, i) => <Card.loader key={i} />)}
       </div>
     </>
   );
 };
 
 export default Topics;
+

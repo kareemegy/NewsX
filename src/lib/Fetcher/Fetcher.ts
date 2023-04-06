@@ -4,7 +4,6 @@ class Fetcher {
   constructor() {
     this.baseURL = import.meta.env.VITE_NEWS_BASE_URL;
     this.apiKey = import.meta.env.VITE_NEWS_API_KEY;
-    console.log("Fetcher", this.baseURL, this.apiKey);
   }
   fetchBase = async (url: string, request?: RequestInit) => {
     const requestOptions = {
@@ -15,7 +14,7 @@ class Fetcher {
       },
     };
 
-    // Object.assign(requestOptions, request);
+    // Object.assign(requestOptions,  );
     // if (request) {
     // }
 
