@@ -28,6 +28,9 @@ const Card = ({ news, children, as }: ICard) => {
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
+    document.body.style.overflow = "hidden";
+    
+
   };
   return (
     <>
@@ -64,6 +67,7 @@ const Modal = ({ news, toggleModal }: any): JSX.Element => {
     function handleClickOutside(event: any) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         toggleModal();
+        document.body.style.overflow = "";
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
