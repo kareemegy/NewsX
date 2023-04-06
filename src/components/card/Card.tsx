@@ -41,7 +41,7 @@ const Card = ({ children, articles, index, as }: ICard) => {
   };
   return (
     <>
-      <div onClick={toggleModal} className="cursor-pointer">
+      <div onClick={toggleModal} className="cursor-pointer w-[320px] h-[400px]">
         <Stack
           as={as}
           className="bg-white border border-gray-200 px-4 py-2 h-full rounded-md max-w-xs justify-between"
@@ -252,7 +252,7 @@ interface ICardTitle {
   className?: string;
 }
 const CardTitle = ({ children, className }: ICardTitle) => (
-  <h4 className={cn("font-bold text-xl", className)}>{children}</h4>
+  <h4 className={cn("font-bold text-xl h-[50px] overflow-hidden", className)}>{children}</h4>
 );
 
 interface ICardImage {
@@ -262,7 +262,7 @@ interface ICardImage {
 
 const CardImage = ({ src, className, ...rest }: ICardImage) => (
   <img
-    className={cn("w-full h-40 object-cover rounded-xl", className)}
+    className={cn("w-full h-[300px] object-cover rounded-xl", className)}
     src={src}
     {...rest}
   />
