@@ -60,21 +60,22 @@ export const Discover = () => {
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center w-full">
-        {news?.map((news, i) => {
+        {news?.map((data, i) => {
           if (news.length === i + 1) {
             return (
               <div key={i} ref={lastElementRef}>
-                <Card news={news}  as="article" />
+                <Card articles={news} index={i} as="article" />
               </div>
             );
           }
           return (
             <div key={i}>
-              <Card news={news}  as="article" />
+              <Card  articles={news} index={i} as="article" />
             </div>
           );
         })}
-        {isLoading && Array.from({ length: 20 }).map((_, i) => <Card.loader key={i} />)}
+        {isLoading &&
+          Array.from({ length: 20 }).map((_, i) => <Card.loader key={i} />)}
       </div>
     </>
   );
