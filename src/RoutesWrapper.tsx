@@ -3,11 +3,12 @@ import ROUTES_MAP from "./constants/routes";
 import Discover from "./pages/Discover";
 import Home from "./pages/home";
 import Topics from "./pages/Topics";
+import Search from "./pages/Search/Search";
 
 const RoutesWrapper = () => {
   const routes = useRoutes([
     {
-      path: ROUTES_MAP.home, 
+      path: ROUTES_MAP.home,
       element: <Home />,
     },
     {
@@ -17,6 +18,10 @@ const RoutesWrapper = () => {
     {
       path: ROUTES_MAP.topics.topic(":topic"),
       element: <Topics />,
+    },
+    {
+      path: ROUTES_MAP.search.search(":query"),
+      element: <Search />,
     },
   ]);
   return routes;
