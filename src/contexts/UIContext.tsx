@@ -7,6 +7,11 @@ export const UIContext = React.createContext({
   setIsSidebarOpen: (b: boolean) => {},
   theme: "light",
   toggleTheme: () => {},
+  isOverlayOpen: false,
+  isModalOpen: false,
+  modalContent: null,
+  openModal: (content: any) => {},
+  closeModal: () => {},
 });
 
 interface IProps {
@@ -16,6 +21,19 @@ interface IProps {
 export const UIProvider = ({ children }: IProps) => {
   const [isMenuShrunk, setIsMenuOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const openModal = (content: any) => {
+    setModalContent(content);
+    setIsModalOpen(true);
+    setIsOverlayOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsOverlayOpen(false);
+  };
   const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -32,6 +50,11 @@ export const UIProvider = ({ children }: IProps) => {
         setIsSidebarOpen,
         theme,
         toggleTheme,
+        isOverlayOpen,
+        isModalOpen,
+        modalContent,
+        openModal,
+        closeModal,
       }}
     >
       {children}

@@ -3,14 +3,21 @@ import { useUI } from "./contexts/UIContext";
 import Header from "./layout/Header/";
 import Sidebar from "./layout/Sidebar";
 import RoutesWrapper from "./RoutesWrapper";
+import Overlay from "./components/Portal/Overlay";
+import { Portal } from "./components/Portal";
 
 const Layout = () => {
   const { isMenuShrunk } = useUI();
-  const { theme } = useUI();
+  const { theme, isModalOpen, modalContent, closeModal } = useUI();
   console.log(theme);
 
   return (
     <div data-theme={theme}>
+      {isModalOpen && (
+        <Overlay isOpen={isModalOpen} onClick={closeModal}>
+          <Portal>{modalContent}</Portal>
+        </Overlay>
+      )}
       <Header />
       <main className={`flex w-full h-full`}>
         <Sidebar />
