@@ -1,12 +1,11 @@
 import cn from "classnames";
-import { useTheme } from "../../contexts/ThemeContext";
 import { useUI } from "../../contexts/UIContext";
-import { JSXElementConstructor, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { isSidebarOpen, setIsSidebarOpen } = useUI();
-  const { toggleTheme, theme } = useTheme();
+  const { toggleTheme, theme } = useUI();
   const inputRef = useRef<any>(null);
   const navigate = useNavigate();
   const Search = () => {
@@ -61,7 +60,7 @@ const Header = () => {
   };
   return (
     <div
-      className={`fixed inset-x-0  h-16 z-10 bg-${theme}-secondary flex justify-between items-center`}
+      className={`fixed inset-x-0  h-16 z-10 bg-secondary flex justify-between items-center`}
     >
       <h1>LOGO</h1>
       <div
@@ -75,9 +74,7 @@ const Header = () => {
 
       <div
         className={cn(
-          "w-fit h-fit rounded-full p-2 transition-all duration-300 ease-out cursor-pointer ",
-          { "bg-light-secondary": theme == "light" },
-          { "bg-dark-secondary": theme == "dark" }
+          "w-fit h-fit rounded-full p-2 transition-all duration-300 ease-out cursor-pointer "
         )}
         onClick={() => toggleTheme()}
       >

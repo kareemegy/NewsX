@@ -4,11 +4,10 @@ import Button from "../../components/button/button";
 import Heading from "../../components/Heading";
 import SIDEBAR_MENUS from "./news.constants";
 import { useUI } from "../../contexts/UIContext";
-import { useTheme } from "../../contexts/ThemeContext";
 
 const Sidebar = () => {
   const { isMenuShrunk, isSidebarOpen } = useUI();
-  const { theme } = useTheme();
+  const { theme } = useUI();
   return (
     <aside
       className={cn(
@@ -16,9 +15,7 @@ const Sidebar = () => {
         {
           "left-0": isSidebarOpen,
           "-left-full sm:left-0": !isSidebarOpen,
-        },
-        { "bg-light-secondary": theme == "light" },
-        { "bg-dark-secondary": theme == "dark" }
+        }
       )}
     >
       <CollapseMenuButton />
