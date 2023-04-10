@@ -16,7 +16,7 @@ const Card = ({ children, title, image, as, onClick }: ICard) => {
       <div onClick={onClick} className="cursor-pointer w-[320px] h-[400px]">
         <Stack
           as={as}
-          className="bg-white border border-gray-200 px-4 py-2 h-full rounded-md max-w-xs justify-between"
+          className="bg-secondary text-primary shadow-light  px-4 py-2 h-full rounded-md max-w-xs justify-between"
         >
           <CardTitle>{title}</CardTitle>
 

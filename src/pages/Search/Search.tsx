@@ -29,7 +29,7 @@ export const Search = () => {
 
   return (
     <>
-      <div className="flex flex-wrap gap-4 justify-center w-full">
+      <div className="flex flex-wrap gap-4 justify-center w-full bg-accent text-background">
         {news?.map((article, i) => {
           if (news.length === i + 1) {
             return (

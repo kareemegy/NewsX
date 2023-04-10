@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import useInfiniteScroll from "./useInfiniteScroll";
-import { useParams } from "react-router-dom";
 import { getNews } from "../lib/newsApi";
 
 const useFetchNews = (paramName: string = "headlines") => {

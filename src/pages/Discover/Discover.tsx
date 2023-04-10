@@ -8,6 +8,7 @@ export const Discover = () => {
   const { type } = useParams();
   const { openModal, closeModal } = useUI();
   const { news, lastElementRef, isLoading } = useFetchNews(type);
+
   const handleOpenModal = (index: number) => {
     const article = news[index];
     openModal(

@@ -7,11 +7,10 @@ import { useUI } from "../../contexts/UIContext";
 
 const Sidebar = () => {
   const { isMenuShrunk, isSidebarOpen } = useUI();
-  const { theme } = useUI();
   return (
     <aside
       className={cn(
-        "fixed transition-all duration-300 flex h-screen top-[64px] inset-y-0 shadow-dark-md",
+        "fixed transition-all duration-300 flex h-screen top-[64px] inset-y-0 shadow-dark-md bg-secondary  text-primary",
         {
           "left-0": isSidebarOpen,
           "-left-full sm:left-0": !isSidebarOpen,

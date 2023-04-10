@@ -43,15 +43,15 @@ const Header = () => {
         <input
           type="search"
           id="default-search"
-          className="block w-full p-4 pl-10 text-sm outline-none text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Search Mockups, Logos..."
+          className="block bg-secondary w-full p-4 pl-10 text-sm outline-none  text-primary border border-primary rounded-lg  "
+          placeholder="Search news, topics, or keywords..."
           ref={inputRef}
           onKeyDown={handleKeyDown}
         />
         <button
           type="submit"
           onClick={handleSubmit}
-          className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-background absolute right-2.5 bottom-2.5 bg-primary focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2"
         >
           Search
         </button>
@@ -60,7 +60,7 @@ const Header = () => {
   };
   return (
     <div
-      className={`fixed inset-x-0  h-16 z-10 bg-secondary flex justify-between items-center`}
+      className={`fixed inset-x-0  h-16 z-10 bg-secondary  text-primary flex justify-between items-center`}
     >
       <h1>LOGO</h1>
       <div

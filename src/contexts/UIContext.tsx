@@ -5,7 +5,7 @@ export const UIContext = React.createContext({
   toggleMenu: () => {},
   isSidebarOpen: false,
   setIsSidebarOpen: (b: boolean) => {},
-  theme: "light",
+  theme: "dark",
   toggleTheme: () => {},
   isOverlayOpen: false,
   isModalOpen: false,
@@ -34,7 +34,7 @@ export const UIProvider = ({ children }: IProps) => {
     setIsModalOpen(false);
     setIsOverlayOpen(false);
   };
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
