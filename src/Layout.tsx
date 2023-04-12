@@ -19,11 +19,11 @@ const Layout = () => {
         </Overlay>
       )}
       <Header />
-      <main className="flex w-full h-full ">
+      <main className="flex w-full h-full">
         <Sidebar />
         <Wrapper
           className={cn(
-            "ml-auto transition-all duration-200 delay-150 mt-[64px] bg-background ",
+            "ml-auto transition-all duration-200 delay-150 mt-[64px] bg-background",
             {
               "sm:w-[calc(100%-240px)]": !isMenuShrunk,
               "sm:w-[calc(100%-64px)]": isMenuShrunk,

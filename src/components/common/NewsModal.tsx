@@ -31,7 +31,7 @@ const NewsModal = ({
   const { closeModal } = useUI();
   return (
     <Modal>
-      <Modal.Header>
+      <Modal.Header className="bg-background">
         <div>
           <button
             className={cn("bg-gray-200 rounded-full p-2 mr-5", {
@@ -72,61 +72,59 @@ const NewsModal = ({
         </div>
         <div>
           <a href={article.link} target="_blank" className="text-white-500">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button className="bg-primary text-background font-bold py-2 px-4 rounded">
               Read More
             </button>
           </a>
         </div>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="bg-background">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6 text-start">
+          <h1 className="text-3xl font-bold text-primary mb-6 text-start">
             {article.title}
           </h1>
         </div>
         <div className="my-8">
-          <h3 className="font-semibold text-gray-800 mb-4 ">
+          <h3 className="font-semibold text-primary mb-4 ">
             {article.summary}
           </h3>
         </div>
         <div className="my-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Details</h2>
+          <h2 className="text-2xl font-semibold text-primary mb-4">Details</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-gray-600 text-sm mb-2 font-medium">Author:</p>
-              <p className="text-gray-700 text-base">{article.author}</p>
+              <p className="text-primary text-sm mb-2 font-medium">Author:</p>
+              <p className="text-primary text-base">{article.author}</p>
             </div>
             <div>
               <p className="text-gray-600 text-sm mb-2 font-medium">
                 Published Date:
               </p>
-              <p className="text-gray-700 text-base">
-                {article.published_date}
-              </p>
+              <p className="text-primary text-base">{article.published_date}</p>
             </div>
 
             <div>
               <p className="text-gray-600 text-sm mb-2 font-medium">Rights:</p>
-              <p className="text-gray-700 text-base">{article.rights}</p>
+              <p className="text-primary text-base">{article.rights}</p>
             </div>
             <div>
               <p className="text-gray-600 text-sm mb-2 font-medium">Topic:</p>
-              <p className="text-gray-700 text-base">{article.topic}</p>
+              <p className="text-primary text-base">{article.topic}</p>
             </div>
             <div>
               <p className="text-gray-600 text-sm mb-2 font-medium">Country:</p>
-              <p className="text-gray-700 text-base">{article.country}</p>
+              <p className="text-primary text-base">{article.country}</p>
             </div>
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer className="bg-gray-50 px-8 py-4 flex justify-end">
+      <Modal.Footer className="bg-background px-8 py-4 flex justify-end">
         <button
           onClick={() => {
             if (onClose) onClose();
             closeModal();
           }}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-primary text-background font-bold py-2 px-4 rounded"
         >
           Close
         </button>
