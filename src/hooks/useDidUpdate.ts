@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useDidUpdate = (callback: () => void, deps: any[]) => {
+const useDidUpdate = (callback: () => void, deps: number[]) => {
   const didMountRef = useRef(false);
 
   useEffect(() => {

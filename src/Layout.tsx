@@ -9,7 +9,6 @@ import { Portal } from "./components/Portal";
 const Layout = () => {
   const { isMenuShrunk } = useUI();
   const { theme, isModalOpen, modalContent, closeModal } = useUI();
-  console.log(theme);
 
   return (
     <div data-theme={theme}>

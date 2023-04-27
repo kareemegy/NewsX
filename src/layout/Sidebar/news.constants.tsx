@@ -22,9 +22,9 @@ const DISCOVER: INews[] = [
   },
   {
     id: 4,
-    title: "Search",
-    icon: "🔍",
-    slug: ROUTES_MAP.discover.discover("search"),
+    title: "Breaking News",
+    icon: "🚨",
+    slug: ROUTES_MAP.discover.discover("breaking News"),
   },
 ];
 

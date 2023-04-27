@@ -4,9 +4,9 @@ import NewsModal from "../../components/common/NewsModal";
 import { useUI } from "../../contexts/UIContext";
 import useFetchNews from "../../hooks/useFetchNews";
 
-export const Topics = () => {
-  const { openModal, closeModal } = useUI();
+export const Discover = () => {
   const { topic } = useParams();
+  const { openModal, closeModal } = useUI();
   const { news, lastElementRef, isLoading } = useFetchNews(topic);
   const handleOpenModal = (index: number) => {
     const article = news[index];
@@ -26,34 +26,19 @@ export const Topics = () => {
       />
     );
   };
-
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center w-full">
-        {news?.map((article, i) => {
-          if (news.length === i + 1) {
-            return (
-              <div key={i} ref={lastElementRef}>
-                <Card
-                  title={article.title}
-                  image={article.media}
-                  as="article"
-                  onClick={() => handleOpenModal(i)}
-                />
-              </div>
-            );
-          }
-          return (
-            <div key={i}>
-              <Card
-                title={article.title}
-                image={article.media}
-                as="article"
-                onClick={() => handleOpenModal(i)}
-              />
-            </div>
-          );
-        })}
+        {news?.map(({ title, media }, i) => (
+          <div key={i} ref={news.length === i + 1 ? lastElementRef : null}>
+            <Card
+              title={title}
+              image={media}
+              as="article"
+              onClick={() => handleOpenModal(i)}
+            />
+          </div>
+        ))}
         {isLoading &&
           Array.from({ length: 20 }).map((_, i) => <Card.loader key={i} />)}
       </div>
@@ -61,4 +46,4 @@ export const Topics = () => {
   );
 };
 
-export default Topics;
+export default Discover;

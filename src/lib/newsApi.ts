@@ -10,7 +10,6 @@ export const getNews = async (
     const response = await fetcher(`?q=${topic}&page_size=50&page=${page}`, {
       signal: controller.signal,
     });
-
     return formattedOutput(response, (data: any) => data.articles);
   } catch (err: any) {
     warning(err);
@@ -33,6 +32,9 @@ const formattedOutput = async (
     if (shapeData) {
       data = shapeData(data);
     }
+  }
+  if (response.status === 401) {
+    console.log("Limit reached");
   }
   return {
     data,

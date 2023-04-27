@@ -3,12 +3,12 @@ import useDidUpdate from "./useDidUpdate";
 
 type asyncFunction = (params: { shouldAppend: boolean }) => Promise<void>;
 
-const useInfiniteScroll = (callback: asyncFunction) => {
+const useInfiniteScroll =  (callback: asyncFunction) => {
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const observerRef = useRef<IntersectionObserver>();
   const timerRef = useRef<any>();
-  const lastElementRef = useCallback(
+  const lastElementRef: any = useCallback(
     (node: HTMLDivElement) => {
       if (isLoading) return;
       if (observerRef.current) observerRef.current.disconnect();
@@ -46,5 +46,4 @@ const useInfiniteScroll = (callback: asyncFunction) => {
     reset,
   };
 };
-
 export default useInfiniteScroll;
