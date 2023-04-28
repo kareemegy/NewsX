@@ -1,5 +1,6 @@
 enum ROUTES {
   home = "home",
+  dashboard = "dashboard",
   discover = "discover",
   topics = "topics",
   search = "search",
@@ -7,6 +8,7 @@ enum ROUTES {
 
 interface IRouteMap {
   [ROUTES.home]: string;
+  [ROUTES.dashboard]: string;
   [ROUTES.discover]: {
     base: string;
     discover: (type: string) => string;
@@ -20,11 +22,11 @@ interface IRouteMap {
     search: (query: string) => string;
   };
 }
-
-const $ = (path: string) => `/${path}`;
+const $ = (path: string) => `/dashboard/${path}`;
 
 const ROUTES_MAP: IRouteMap = {
   [ROUTES.home]: "/",
+  [ROUTES.dashboard]: (ROUTES.dashboard),
   [ROUTES.discover]: {
     base: $(ROUTES.discover),
     discover: (type: string) => $(ROUTES.discover) + `/${type}`,
