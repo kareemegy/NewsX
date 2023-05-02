@@ -5,12 +5,17 @@ import Discover from "./pages/Discover";
 import Search from "./pages/Search";
 import Topics from "./pages/Topics";
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 
 const Layout = () => {
   const appRoutes = useRoutes([
     {
-      path: "/",
+      path: ROUTES_MAP.home,
       element: <Home />,
+    },
+    {
+      path: ROUTES_MAP.login,
+      element: <Login />,
     },
     {
       path: ROUTES_MAP.dashboard,

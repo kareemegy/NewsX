@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <>
       <nav className="container mx-auto px-4 mt-9 flex justify-between">
@@ -9,9 +11,14 @@ const Home = () => {
           src="src/assets/imgs/logo-black.svg"
           alt="News LOGO"
         />
-        <Button className="bg-blue px-8 py-3 rounded-md text-2xl text-white">
-          Login
-        </Button>
+        <div>
+          <Button
+            handleClick={() => navigate("/login")}
+            className="bg-blue px-8 py-3 rounded-md text-2xl text-white"
+          >
+            Login
+          </Button>
+        </div>
       </nav>
       <main className="container mx-auto px-4 mt-[40px] flex justify-between h-[600px]">
         <div className="flex flex-col justify-center w-[500px] ">
@@ -30,7 +37,7 @@ const Home = () => {
               <path
                 d="M198.861 231.832C90.5984 199.942 -65.8655 63.6109 29.654 13.4247C69.206 -7.35606 99.4642 0.847046 143.831 6.12572C261.437 20.1182 366.758 133.203 390.716 182.237C414.675 231.271 334.189 271.696 198.861 231.832Z"
                 fill="#697CE3"
-                fill-opacity="0.1"
+                fillOpacity="0.1"
               ></path>
             </svg>
           </div>
