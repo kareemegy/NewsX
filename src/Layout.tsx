@@ -6,6 +6,7 @@ import Search from "./pages/Search";
 import Topics from "./pages/Topics";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Register from "./pages/Register/Register";
 
 const Layout = () => {
   const appRoutes = useRoutes([
@@ -16,6 +17,10 @@ const Layout = () => {
     {
       path: ROUTES_MAP.login,
       element: <Login />,
+    },
+    {
+      path: ROUTES_MAP.register,
+      element: <Register />,
     },
     {
       path: ROUTES_MAP.dashboard,
