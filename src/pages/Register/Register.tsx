@@ -15,6 +15,9 @@ const Register = () => {
     setPassword(event.target.value);
   };
   const handleSignUp = async () => {
+    if (email === "" || password === "") {
+      return alert("Please fill in all fields");
+    }
     const user = await signUp(email, password);
     setEmail("");
     setPassword("");
