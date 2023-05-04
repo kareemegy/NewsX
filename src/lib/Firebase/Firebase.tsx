@@ -57,8 +57,6 @@ export const signIn = async (email: string, password: string) => {
   } catch (error: any) {
     console.log(error.errorCode, error.errorMessage);
     return error.code;
-
-    // handle error
   }
 };
 export const signOutUser = async () => {

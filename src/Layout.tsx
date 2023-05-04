@@ -6,7 +6,8 @@ import Search from "./pages/Search";
 import Topics from "./pages/Topics";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Register from "./pages/Register/Register";
+import Register from "./pages/Register";
+import Wizard from "./pages/Wizard";
 
 const Layout = () => {
   const appRoutes = useRoutes([
@@ -21,6 +22,10 @@ const Layout = () => {
     {
       path: ROUTES_MAP.register,
       element: <Register />,
+    },
+    {
+      path: ROUTES_MAP.wizard,
+      element: <Wizard />,
     },
     {
       path: ROUTES_MAP.dashboard,

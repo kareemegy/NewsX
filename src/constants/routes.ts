@@ -3,6 +3,7 @@ enum ROUTES {
   dashboard = "dashboard",
   login = "login",
   register = "register",
+  wizard = "wizard",
   discover = "discover",
   topics = "topics",
   search = "search",
@@ -13,6 +14,7 @@ interface IRouteMap {
   [ROUTES.dashboard]: string;
   [ROUTES.login]: string;
   [ROUTES.register]: string;
+  [ROUTES.wizard]: string;
   [ROUTES.discover]: {
     base: string;
     discover: (type: string) => string;
@@ -33,6 +35,7 @@ const ROUTES_MAP: IRouteMap = {
   [ROUTES.dashboard]: ROUTES.dashboard,
   [ROUTES.register]: ROUTES.register,
   [ROUTES.login]: ROUTES.login,
+  [ROUTES.wizard]: ROUTES.wizard,
   [ROUTES.discover]: {
     base: $(ROUTES.discover),
     discover: (type: string) => $(ROUTES.discover) + `/${type}`,

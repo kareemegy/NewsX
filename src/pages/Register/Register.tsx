@@ -14,6 +14,10 @@ const Register = () => {
   const handlePasswordInput = (event: any) => {
     setPassword(event.target.value);
   };
+  const clearInputs = () => {
+    setEmail("");
+    setPassword("");
+  };
   const handleSignUp = async () => {
     if (email === "" || password === "") {
       return alert("Please fill in all fields");
@@ -23,9 +27,9 @@ const Register = () => {
     if (user === "auth/email-already-exists") {
       return alert("email-already-exists");
     }
-    setEmail("");
-    setPassword("");
-    navigate("/dashboard");
+    clearInputs();
+
+    navigate("/wizard");
     console.log(user);
   };
   return (
