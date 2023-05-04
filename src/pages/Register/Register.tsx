@@ -29,7 +29,7 @@ const Register = () => {
           src="src/assets/images/logo-black.svg"
           alt="News LOGO"
         />
-        <h1 className="text-3xl mb-3">Login</h1>
+        <h1 className="text-3xl mb-3">Sign up</h1>
 
         <input
           className="inline-block bg-slate-200 m-1 p-3 rounded w-[300px]"
