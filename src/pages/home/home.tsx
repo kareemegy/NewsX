@@ -8,7 +8,7 @@ const Home = () => {
       <nav className="container mx-auto px-4 mt-9 flex justify-between">
         <img
           className="w-[190px]"
-          src="src/assets/imgs/logo-black.svg"
+          src="src/assets/images/logo-black.svg"
           alt="News LOGO"
         />
         <div>
@@ -53,7 +53,7 @@ const Home = () => {
         <div className="self-center">
           <img
             className="h-[525px]"
-            src="src/assets/imgs/planet.webp"
+            src="src/assets/images/planet.webp"
             alt="plant"
           />
         </div>
