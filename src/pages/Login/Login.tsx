@@ -31,7 +31,7 @@ const Login = () => {
         <h1 className="text-3xl mb-3">Login</h1>
 
         <input
-          className="inline-block bg-slate-200 m-1 p-3 rounded"
+          className="inline-block bg-slate-200 m-1 p-3 rounded w-[300px]"
           placeholder="Email"
           type="email"
           name="email"
@@ -39,7 +39,7 @@ const Login = () => {
           onChange={handleEmailInput}
         />
         <input
-          className="inline-block bg-slate-200 my-3 p-3 rounded"
+          className="inline-block bg-slate-200 my-3 p-3 rounded w-[300px]"
           placeholder="password"
           type="password"
           name="password"

@@ -2,6 +2,8 @@ import cn from "classnames";
 import { useUI } from "../../contexts/UIContext";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../lib/Firebase/Firebase";
 
 const Header = () => {
   const { isSidebarOpen, setIsSidebarOpen } = useUI();
@@ -58,6 +60,10 @@ const Header = () => {
       </div>
     );
   };
+  const signOutUser = () => {
+    signOut(auth);
+    navigate("/login");
+  };
   return (
     <div
       className={`fixed inset-x-0  h-16 z-10 bg-secondary  text-primary flex justify-between items-center`}
@@ -78,6 +84,9 @@ const Header = () => {
         )}
         onClick={() => toggleTheme()}
       >
+        <button className="mr-4" onClick={signOutUser}>
+          Log Out
+        </button>
         {theme === "light" ? "🌙" : "☀️"}
       </div>
     </div>
