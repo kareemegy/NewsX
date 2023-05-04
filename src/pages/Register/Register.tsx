@@ -19,6 +19,10 @@ const Register = () => {
       return alert("Please fill in all fields");
     }
     const user = await signUp(email, password);
+
+    if (user === "auth/email-already-exists") {
+      return alert("email-already-exists");
+    }
     setEmail("");
     setPassword("");
     navigate("/dashboard");

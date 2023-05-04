@@ -40,10 +40,8 @@ export const signUp = async (email: string, password: string) => {
     const user = userCredential.user;
     return user;
   } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // handle error
-    throw new Error(errorCode, errorMessage);
+    console.log(error.errorCode, error.errorMessage);
+    return error.code;
   }
 };
 
@@ -57,10 +55,10 @@ export const signIn = async (email: string, password: string) => {
     const user = userCredential.user;
     return user;
   } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+    console.log(error.errorCode, error.errorMessage);
+    return error.code;
+
     // handle error
-    throw new Error(errorCode, errorMessage);
   }
 };
 export const signOutUser = async () => {

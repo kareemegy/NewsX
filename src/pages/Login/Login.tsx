@@ -17,7 +17,15 @@ const Login = () => {
     if (email === "" || password === "") {
       return alert("Please fill in all fields");
     }
+
     const user = await signIn(email, password);
+    if (user === "auth/wrong-password") {
+      return alert("Wrong password");
+    }
+    if (user === "auth/invalid-email") {
+      return alert("invalid-email");
+    }
+
     setEmail("");
     setPassword("");
     navigate("/dashboard");
@@ -32,7 +40,6 @@ const Login = () => {
           alt="News LOGO"
         />
         <h1 className="text-3xl mb-3">Login</h1>
-
         <input
           className="inline-block bg-slate-200 m-1 p-3 rounded w-[300px]"
           placeholder="Email"
