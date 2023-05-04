@@ -82,7 +82,7 @@ const CollapseMenuButton = () => {
   return (
     <div className="absolute top-5 right-0">
       <Button
-        onClick={toggleMenu}
+        handleClick={toggleMenu}
         className="p-2.5 items-center justify-center bg-slate-100"
       >
         <svg
