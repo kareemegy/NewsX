@@ -19,7 +19,6 @@ const Register = () => {
   };
   const handleSignUp = async () => {
     const user = await signUp(email, password);
-    // clear inputs
     setEmail("");
     setPassword("");
     navigate("/dashboard");
