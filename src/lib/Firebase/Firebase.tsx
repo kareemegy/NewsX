@@ -5,9 +5,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
-interface Iconfig {
+interface IConfig {
   apiKey: string;
   authDomain: string;
   projectId: string;
@@ -16,13 +17,13 @@ interface Iconfig {
   appId: string;
 }
 
-const firebaseConfig: Iconfig = {
-  apiKey: "AIzaSyCQPyfghBMmV5guwIjLtyEo5-KqC0nmv-M",
-  authDomain: "newsx-adde1.firebaseapp.com",
-  projectId: "newsx-adde1",
-  storageBucket: "newsx-adde1.appspot.com",
-  messagingSenderId: "251543699748",
-  appId: "1:251543699748:web:9ee978a83449ad09bcb3b1",
+const firebaseConfig: IConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -62,14 +63,19 @@ export const signIn = async (email: string, password: string) => {
     throw new Error(errorCode, errorMessage);
   }
 };
-
+export const signOutUser = async () => {
+  try {
+    await signOut(auth);
+    console.log("user is sign out");
+  } catch (error) {
+    console.error(error);
+  }
+};
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
-    console.log(uid);
-    
+    console.log("user is sign in");
   } else {
-    // User is signed out
-    // ...
+    console.log("user is not sign in");
   }
 });

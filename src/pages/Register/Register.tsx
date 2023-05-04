@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import { useState } from "react";
-import { signUp } from "../../lib/Firebase/Firebase";
+import { auth, signUp } from "../../lib/Firebase/Firebase";
+import { signOut } from "firebase/auth";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  // auth.currentUser && navigate("/dashboard");
+  console.log(auth.currentUser);
+  // signOut(auth)
   const handleEmailInput = (event: any) => {
     setEmail(event.target.value);
   };
@@ -17,8 +22,8 @@ const Register = () => {
     // clear inputs
     setEmail("");
     setPassword("");
+    navigate("/dashboard");
     console.log(user);
-
   };
   return (
     <>
