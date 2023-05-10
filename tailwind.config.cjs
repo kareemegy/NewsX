@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -23,6 +23,7 @@ module.exports = {
         error: "var(--error)",
         background: "var(--background)",
         blue: "#7795f8",
+        wizardBlue: "#f8fafc",
       },
     },
   },
