@@ -24,6 +24,8 @@ module.exports = {
         background: "var(--background)",
         blue: "#7795f8",
         wizardBlue: "#f8fafc",
+        wizardBlueDark: "#344767",
+
       },
     },
   },
