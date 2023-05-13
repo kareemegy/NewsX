@@ -3,4 +3,5 @@ export interface Props {
   icon?: string;
   className?: string;
   handleClick?: () => void;
+  disabled?: boolean;
 }
