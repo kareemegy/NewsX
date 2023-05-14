@@ -229,14 +229,14 @@ const Topics = () => {
   };
 
   useEffect(() => {
-    const storedTopics = localStorage.getItem("selectedTopics");
+    const storedTopics = sessionStorage.getItem("selectedTopics");
     if (storedTopics) {
       setSelectedTopics(JSON.parse(storedTopics));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
+    sessionStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
   }, [selectedTopics]);
 
   return (
