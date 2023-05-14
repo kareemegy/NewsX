@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import cn from "classnames";
 
 const Wizard = () => {
   const [step, setStep] = useState(1);
-  console.log("%c the state is " + step, "color: red");
-
   const [activeButton, setActiveButton] = useState(1);
 
   const handleStepChange = (newStep: number) => {
@@ -66,19 +64,19 @@ const Wizard = () => {
             )}
           ></div>
           <div className="w-full flex justify-between items-center">
-            {buttonData.map((button, index) => (
+            {buttonData.map(({ active, onClick, label }, index) => (
               <div className="flex flex-col items-center" key={index}>
                 <span
                   className={cn(
                     "block w-[8px] h-[8px] rounded-xl  p-2 transition-all delay-100 duration-300  ease-in",
                     {
-                      "bg-slate-500": button.active,
-                      "bg-slate-200": !button.active,
+                      "bg-slate-500": active,
+                      "bg-slate-200": !active,
                     }
                   )}
                 ></span>
-                <Button handleClick={button.onClick} className="text-slate-500">
-                  {button.label}
+                <Button handleClick={onClick} className="text-slate-500">
+                  {label}
                 </Button>
               </div>
             ))}
@@ -86,7 +84,7 @@ const Wizard = () => {
         </div>
         <div>
           {step === 1 && <Info />}
-          {step === 2 && <h1>Topics</h1>}
+          {step === 2 && <Topics />}
           {step === 3 && <h1>Address</h1>}
           <div className="flex justify-between mt-8">
             <Button
@@ -115,7 +113,6 @@ export default Wizard;
 
 const Info = () => {
   const [file, setFile] = useState(null);
-
   const handleFileChange = (event: any) => {
     console.log(event.target.files[0]);
     setFile(event.target.files[0]);
@@ -194,6 +191,79 @@ const Info = () => {
               />
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Topics = () => {
+  const [topics, setTopics] = useState([
+    "News",
+    "Sport",
+    "Tech",
+    "World",
+    "Finance",
+    "Politics",
+    "Business",
+    "Economics",
+    "Entertainment",
+    "Beauty",
+    "Travel",
+    "Music",
+    "Food",
+    "Science",
+    "Gaming",
+    "Energy",
+  ]);
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+
+  const toggleTopic = (topic: string) => {
+    setSelectedTopics((prevSelectedTopics) => {
+      if (prevSelectedTopics.includes(topic)) {
+        return prevSelectedTopics.filter((t) => t !== topic);
+      } else {
+        return [...prevSelectedTopics, topic];
+      }
+    });
+  };
+
+  useEffect(() => {
+    const storedTopics = localStorage.getItem("selectedTopics");
+    if (storedTopics) {
+      setSelectedTopics(JSON.parse(storedTopics));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
+  }, [selectedTopics]);
+
+  return (
+    <div className=" shadow-2xl p-5 h-[450px] w-[750px]">
+      <div>
+        <h1 className=" text-center text-3xl mb-3 text-wizardBlueDark">
+          What topics are you interested in?
+        </h1>
+        <p className="text-center text-lg text-slate-500">
+          Select at least 3 topics to get started
+        </p>
+      </div>
+      <div className="h-[80%] flex items-center ">
+        <div className="flex flex-wrap justify-center">
+          {topics.map((topic, index) => (
+            <div className="m-2" key={index}>
+              <button
+                onClick={() => toggleTopic(topic)}
+                className={cn("bg-slate-200 text-slate-500 p-3 rounded-lg", {
+                  "bg-wizardBlueDark text-white":
+                    selectedTopics.includes(topic),
+                })}
+              >
+                {topic}
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </div>
