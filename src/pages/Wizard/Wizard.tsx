@@ -22,6 +22,7 @@ const Wizard = () => {
     setStep((prevStep) => prevStep - 1);
     setActiveButton((prevStep) => prevStep - 1);
   };
+
   const buttonData = [
     {
       label: "About",
@@ -85,7 +86,7 @@ const Wizard = () => {
         <div>
           {step === 1 && <Info />}
           {step === 2 && <Topics />}
-          {step === 3 && <h1>Address</h1>}
+          {step === 3 && <Preferences />}
           <div className="flex justify-between mt-8">
             <Button
               handleClick={handlePrevStep}
@@ -264,6 +265,27 @@ const Topics = () => {
               </button>
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Preferences = () => {
+  return (
+    <div className="shadow-2xl p-5 h-[450px] w-[750px] flex flex-col justify-start ">
+      <div>
+        <h1 className="text-3xl text-center mb-3 text-wizardBlueDark">
+          Select your preferences
+        </h1>
+      </div>
+
+      <div className="flex  justify-center items-center h-screen ">
+        <div className="bg-gray-800 mr-10 text-white p-[90px] rounded-lg shadow-2xl">
+          <Button className="text-5xl font-extrabold mb-4">Dark</Button>
+        </div>
+        <div className="bg-white-800 text-gray-800 p-[90px] rounded-lg shadow-2xl">
+          <Button className="text-5xl font-extrabold mb-4">Light</Button>
         </div>
       </div>
     </div>
