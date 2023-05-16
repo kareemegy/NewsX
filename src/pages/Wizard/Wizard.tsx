@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import cn from "classnames";
+import { storeUserSettings } from "../../lib/Firebase/Firebase";
 
 const Wizard = () => {
   const [step, setStep] = useState(1);
@@ -12,7 +13,19 @@ const Wizard = () => {
   };
 
   const handleNextStep = () => {
-    if (step === 3) return;
+    if (step === 3) {
+      const storedFormData = sessionStorage.getItem("formData");
+      const storedTopics = sessionStorage.getItem("selectedTopics");
+      const storedPreference = sessionStorage.getItem("selectedPreference");
+      if (storedFormData && storedTopics && storedPreference) {
+        storeUserSettings({
+          ...JSON.parse(storedFormData),
+          topics: JSON.parse(storedTopics),
+          preference: JSON.parse(storedPreference),
+        });
+          
+      }
+    }
     setStep((prevStep) => prevStep + 1);
     setActiveButton((prevStep) => prevStep + 1);
   };
@@ -71,7 +84,7 @@ const Wizard = () => {
                   className={cn(
                     "block w-[8px] h-[8px] rounded-xl  p-2 transition-all delay-100 duration-300  ease-in",
                     {
-                      "bg-slate-500": active,
+                      "bg-slate-800": active,
                       "bg-slate-200": !active,
                     }
                   )}
@@ -84,7 +97,7 @@ const Wizard = () => {
           </div>
         </div>
         <div>
-          {step === 1 && <Info />}
+          {step === 1 && <About />}
           {step === 2 && <Topics />}
           {step === 3 && <Preferences />}
           <div className="flex justify-between mt-8">
@@ -112,12 +125,37 @@ const Wizard = () => {
 
 export default Wizard;
 
-const Info = () => {
+const About = () => {
   const [file, setFile] = useState(null);
+  // send to fore store and get from there
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+  });
   const handleFileChange = (event: any) => {
-    console.log(event.target.files[0]);
     setFile(event.target.files[0]);
   };
+
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    const storedFormData = sessionStorage.getItem("formData");
+    if (storedFormData) {
+      setFormData(JSON.parse(storedFormData));
+    }
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("formData", JSON.stringify(formData));
+  }, [formData]);
+
   return (
     <div className="shadow-2xl p-5 h-[450px] w-[750px] ">
       <div className="text-center mb-6">
@@ -165,6 +203,8 @@ const Info = () => {
                 name="firstName"
                 placeholder="Eg. John"
                 id="firstName"
+                onChange={handleInputChange}
+                value={formData.firstName}
               />
             </div>
             <div className="mb-1">
@@ -177,6 +217,8 @@ const Info = () => {
                 name="lastName"
                 placeholder="Eg. Doe"
                 id="lastName"
+                onChange={handleInputChange}
+                value={formData.lastName}
               />
             </div>
             <div className="mb-1">
@@ -186,9 +228,11 @@ const Info = () => {
               <input
                 className="w-full p-2 rounded-xl outline-none border border-slate-200"
                 type="text"
-                name="lastName"
+                name="address"
                 placeholder="Eg. 1234 Main St"
-                id="lastName"
+                id="address"
+                onChange={handleInputChange}
+                value={formData.address}
               />
             </div>
           </div>
@@ -199,7 +243,7 @@ const Info = () => {
 };
 
 const Topics = () => {
-  const [topics, setTopics] = useState([
+  const [topics] = useState([
     "News",
     "Sport",
     "Tech",
@@ -217,6 +261,7 @@ const Topics = () => {
     "Gaming",
     "Energy",
   ]);
+  // send to fore store and get from there
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
   const toggleTopic = (topic: string) => {
@@ -238,6 +283,7 @@ const Topics = () => {
 
   useEffect(() => {
     sessionStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
+    console.log(selectedTopics);
   }, [selectedTopics]);
 
   return (
@@ -272,6 +318,24 @@ const Topics = () => {
 };
 
 const Preferences = () => {
+  const [selectedPreference, setSelectedPreference] = useState<string>("");
+  const userPreferences = (preference: string) => {
+    setSelectedPreference(preference);
+  };
+  useEffect(() => {
+    const storedPreference = sessionStorage.getItem("selectedPreference");
+    if (storedPreference) {
+      setSelectedPreference(JSON.parse(storedPreference));
+    }
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem(
+      "selectedPreference",
+      JSON.stringify(selectedPreference)
+    );
+    console.log(selectedPreference);
+  }, [selectedPreference]);
   return (
     <div className="shadow-2xl p-5 h-[450px] w-[750px] flex flex-col justify-start ">
       <div>
@@ -281,11 +345,21 @@ const Preferences = () => {
       </div>
 
       <div className="flex  justify-center items-center h-screen ">
-        <div className="bg-gray-800 mr-10 text-white p-[90px] rounded-lg shadow-2xl">
-          <Button className="text-5xl font-extrabold mb-4">Dark</Button>
+        <div className="bg-gray-800 mr-10 text-white p-[70px] rounded-lg shadow-2xl">
+          <Button
+            handleClick={() => userPreferences("dark")}
+            className="text-3xl font-extrabold mb-4"
+          >
+            Dark
+          </Button>
         </div>
-        <div className="bg-white-800 text-gray-800 p-[90px] rounded-lg shadow-2xl">
-          <Button className="text-5xl font-extrabold mb-4">Light</Button>
+        <div className="bg-white-800 text-gray-800 p-[70px] rounded-lg shadow-2xl">
+          <Button
+            handleClick={() => userPreferences("light")}
+            className="text-3xl font-extrabold mb-4"
+          >
+            Light
+          </Button>
         </div>
       </div>
     </div>
