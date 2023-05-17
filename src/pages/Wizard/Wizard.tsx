@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import cn from "classnames";
 import { storeUserSettings } from "../../lib/Firebase/Firebase";
+import { useNavigate } from "react-router-dom";
 
 const Wizard = () => {
   const [step, setStep] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
+  const navigate = useNavigate();
 
   const handleStepChange = (newStep: number) => {
     setStep(newStep);
@@ -23,8 +25,8 @@ const Wizard = () => {
           topics: JSON.parse(storedTopics),
           preference: JSON.parse(storedPreference),
         });
-          
       }
+      navigate("/dashboard");
     }
     setStep((prevStep) => prevStep + 1);
     setActiveButton((prevStep) => prevStep + 1);
@@ -244,32 +246,96 @@ const About = () => {
 
 const Topics = () => {
   const [topics] = useState([
-    "News",
-    "Sport",
-    "Tech",
-    "World",
-    "Finance",
-    "Politics",
-    "Business",
-    "Economics",
-    "Entertainment",
-    "Beauty",
-    "Travel",
-    "Music",
-    "Food",
-    "Science",
-    "Gaming",
-    "Energy",
+    {
+      id: 1,
+      title: "News",
+      icon: "📰",
+    },
+    {
+      id: 2,
+      title: "Sport",
+      icon: "⚽️",
+    },
+    {
+      id: 3,
+      title: "Tech",
+      icon: "🖥️",
+    },
+    {
+      id: 4,
+      title: "World",
+      icon: "🌎",
+    },
+    {
+      id: 5,
+      title: "Finance",
+      icon: "💵",
+    },
+    {
+      id: 6,
+      title: "Politics",
+      icon: "🏛️",
+    },
+    {
+      id: 7,
+      title: "Business",
+      icon: "💼",
+    },
+    {
+      id: 8,
+      title: "Economics",
+      icon: "📈",
+    },
+    {
+      id: 9,
+      title: "Entertainment",
+      icon: "🎭",
+    },
+    {
+      id: 10,
+      title: "Beauty",
+      icon: "💄",
+    },
+    {
+      id: 11,
+      title: "Travel",
+      icon: "✈️",
+    },
+    {
+      id: 12,
+      title: "Music",
+      icon: "🎵",
+    },
+    {
+      id: 13,
+      title: "Food",
+      icon: "🍔",
+    },
+    {
+      id: 14,
+      title: "Science",
+      icon: "🔬",
+    },
+    {
+      id: 15,
+      title: "Gaming",
+      icon: "🎮",
+    },
+    {
+      id: 16,
+      title: "Energy",
+      icon: "⚡",
+    },
   ]);
-  // send to fore store and get from there
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
-  const toggleTopic = (topic: string) => {
-    setSelectedTopics((prevSelectedTopics) => {
-      if (prevSelectedTopics.includes(topic)) {
-        return prevSelectedTopics.filter((t) => t !== topic);
+  const [selectedTopics, setSelectedTopics] = useState<any[]>([]);
+
+  const toggleTopic = (topic: any) => {
+    setSelectedTopics((prevTopics) => {
+      if (prevTopics.some((prevTopic) => prevTopic.id === topic.id)) {
+        return prevTopics.filter((prevTopic) => prevTopic.id !== topic.id);
       } else {
-        return [...prevSelectedTopics, topic];
+        return [...prevTopics, topic];
       }
     });
   };
@@ -283,7 +349,6 @@ const Topics = () => {
 
   useEffect(() => {
     sessionStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
-    console.log(selectedTopics);
   }, [selectedTopics]);
 
   return (
@@ -298,16 +363,17 @@ const Topics = () => {
       </div>
       <div className="h-[80%] flex items-center ">
         <div className="flex flex-wrap justify-center">
-          {topics.map((topic, index) => (
-            <div className="m-2" key={index}>
+          {topics.map((topic) => (
+            <div className="m-2" key={topic.id}>
               <button
                 onClick={() => toggleTopic(topic)}
                 className={cn("bg-slate-200 text-slate-500 p-3 rounded-lg", {
-                  "bg-wizardBlueDark text-white":
-                    selectedTopics.includes(topic),
+                  "bg-wizardBlueDark text-white": selectedTopics.some(
+                    (selectedTopic) => selectedTopic.id === topic.id
+                  ),
                 })}
               >
-                {topic}
+                {topic.icon} {topic.title}
               </button>
             </div>
           ))}

@@ -1,4 +1,5 @@
-import { Navigate, useRoutes } from "react-router-dom";
+import {
+  useRoutes } from "react-router-dom";
 import Home from "./pages/home/home";
 import ROUTES_MAP from "./constants/routes";
 import Discover from "./pages/Discover";

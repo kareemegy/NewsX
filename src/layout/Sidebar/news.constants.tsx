@@ -1,5 +1,6 @@
-import { INews, INewsSource } from "./news.types";
+import { INews } from "./news.types";
 import ROUTES_MAP from "../../constants/routes";
+import { getUserSettings } from "../../lib/Firebase/Firebase";
 
 const DISCOVER: INews[] = [
   {
@@ -28,40 +29,23 @@ const DISCOVER: INews[] = [
   },
 ];
 
-const TOPICS: INews[] = [
-  {
-    id: 1,
-    title: "Sports",
-    icon: "⚽",
-    slug: ROUTES_MAP.topics.topic("sports"),
-  },
-  {
-    id: 2,
-    title: "Entertainment",
-    icon: "🎬",
-    slug: ROUTES_MAP.topics.topic("entertainment"),
-  },
-  {
-    id: 3,
-    title: "Business",
-    icon: "💼",
-    slug: ROUTES_MAP.topics.topic("business"),
-  },
-  {
-    id: 4,
-    title: "Technology",
-    icon: "🖥️",
-    slug: ROUTES_MAP.topics.topic("tech"),
-  },
-  {
-    id: 5,
-    title: "Politics",
-    icon: "🗳️",
-    slug: ROUTES_MAP.topics.topic("politics"),
-  },
-];
+const getTopics = async () => {
+  const userSettings = await getUserSettings();
+  const topics = userSettings?.topics;
+  const topicsArray = topics?.map(({ id, title, icon }: any) => {
+    return {
+      id: id,
+      title: title,
+      icon: icon,
+      slug: ROUTES_MAP.topics.topic(title),
+    };
+  });
+  return topicsArray;
+};
 
-const SIDEBAR_MENUS: INewsSource[] = [
+const TOPICS: INews[] = await getTopics();
+
+const SIDEBAR_MENUS: any = [
   {
     id: 1,
     title: "Discover",

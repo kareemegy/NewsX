@@ -7,6 +7,7 @@ import { useUI } from "../../contexts/UIContext";
 
 const Sidebar = () => {
   const { isMenuShrunk, isSidebarOpen } = useUI();
+
   return (
     <aside
       className={cn(
@@ -41,7 +42,7 @@ const List = () => {
   return (
     <>
       <ul className="p-1 mt-10">
-        {SIDEBAR_MENUS.map(({ id, title, data }) => (
+        {SIDEBAR_MENUS.map(({ id, title, data }: any) => (
           <li className="p-2" key={id}>
             <div
               className={`transition-all ease-out duration-200 ${
@@ -52,14 +53,14 @@ const List = () => {
             </div>
 
             <div className="ml-3 mb-3">
-              {data.map(({ id, icon, title, slug }) => (
+              {data?.map(({ id, icon, title }: any) => (
                 <Button
                   className="mb-4 mt-2 whitespace-nowrap"
                   key={id}
                   icon={icon}
                 >
                   <div
-                    onClick={() => navigate(slug)}
+                    onClick={() => navigate(title)}
                     className={`transition-all ease-out duration-200 ${
                       isMenuShrunk ? "opacity-0" : "delay-300 opacity-1"
                     }`}

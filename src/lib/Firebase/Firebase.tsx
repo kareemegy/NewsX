@@ -1,12 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {
-  addDoc,
-  collection,
-  doc,
-  getFirestore,
-  setDoc,
-} from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 
 import {
   getAuth,
@@ -15,7 +9,6 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { Navigate, redirect } from "react-router-dom";
 
 interface IConfig {
   apiKey: string;
@@ -98,6 +91,25 @@ export const storeUserSettings = async (data: any) => {
       removeSessionStorage();
     } catch (error) {
       console.error(error);
+    }
+  }
+};
+
+export const getUserSettings = async () => {
+  const userId = auth.currentUser?.uid;
+  if (userId) {
+    const userRef = doc(db, "users", userId);
+    try {
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        console.log(userData);
+        return userData;
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.log("Error getting document:", error);
     }
   }
 };
