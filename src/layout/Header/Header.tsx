@@ -3,7 +3,7 @@ import { useUI } from "../../contexts/UIContext";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from "../../lib/Firebase/Firebase";
+import { auth, removeLocalStorage } from "../../lib/Firebase/Firebase";
 
 const Header = () => {
   const { isSidebarOpen, setIsSidebarOpen } = useUI();
@@ -62,6 +62,7 @@ const Header = () => {
   };
   const signOutUser = () => {
     signOut(auth);
+    removeLocalStorage
     navigate("/login");
   };
   return (

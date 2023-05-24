@@ -115,7 +115,7 @@ export const getUserSettings = async () => {
   }
 };
 
-export const removeSessionStorage = () => {
+export const removeLocalStorage = () => {
   localStorage.removeItem("formData");
   localStorage.removeItem("selectedTopics");
   localStorage.removeItem("selectedPreference");
