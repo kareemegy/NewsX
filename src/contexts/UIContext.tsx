@@ -1,4 +1,6 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useContext, useState } from "react";
+import { auth } from "../lib/Firebase/Firebase";
 
 export const UIContext = React.createContext({
   isMenuShrunk: false,
@@ -34,9 +36,13 @@ export const UIProvider = ({ children }: IProps) => {
     setIsModalOpen(false);
     setIsOverlayOpen(false);
   };
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(
+    localStorage.getItem("selectedPreference")
+  ) as any;
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
+    localStorage.setItem("selectedPreference", theme);
+    console.log(theme);
   };
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuShrunk);
