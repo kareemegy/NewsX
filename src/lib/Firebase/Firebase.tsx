@@ -89,7 +89,6 @@ export const storeUserSettings = async (data: any) => {
     };
     try {
       await setDoc(userRef, payload);
-      removeSessionStorage();
     } catch (error) {
       console.error(error);
     }
@@ -117,7 +116,7 @@ export const getUserSettings = async () => {
 };
 
 export const removeSessionStorage = () => {
-  sessionStorage.removeItem("formData");
-  sessionStorage.removeItem("selectedTopics");
-  sessionStorage.removeItem("selectedPreference");
+  localStorage.removeItem("formData");
+  localStorage.removeItem("selectedTopics");
+  localStorage.removeItem("selectedPreference");
 };

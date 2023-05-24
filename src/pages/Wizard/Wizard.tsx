@@ -16,9 +16,9 @@ const Wizard = () => {
 
   const handleNextStep = () => {
     if (step === 3) {
-      const storedFormData = sessionStorage.getItem("formData");
-      const storedTopics = sessionStorage.getItem("selectedTopics");
-      const storedPreference = sessionStorage.getItem("selectedPreference");
+      const storedFormData = localStorage.getItem("formData");
+      const storedTopics = localStorage.getItem("selectedTopics");
+      const storedPreference = localStorage.getItem("selectedPreference");
       if (storedFormData && storedTopics && storedPreference) {
         storeUserSettings({
           ...JSON.parse(storedFormData),
