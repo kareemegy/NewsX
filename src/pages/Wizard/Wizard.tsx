@@ -148,14 +148,14 @@ const About = () => {
   };
 
   useEffect(() => {
-    const storedFormData = sessionStorage.getItem("formData");
+    const storedFormData = localStorage.getItem("formData");
     if (storedFormData) {
       setFormData(JSON.parse(storedFormData));
     }
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem("formData", JSON.stringify(formData));
+    localStorage.setItem("formData", JSON.stringify(formData));
   }, [formData]);
 
   return (
@@ -341,14 +341,14 @@ const Topics = () => {
   };
 
   useEffect(() => {
-    const storedTopics = sessionStorage.getItem("selectedTopics");
+    const storedTopics = localStorage.getItem("selectedTopics");
     if (storedTopics) {
       setSelectedTopics(JSON.parse(storedTopics));
     }
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
+    localStorage.setItem("selectedTopics", JSON.stringify(selectedTopics));
   }, [selectedTopics]);
 
   return (
@@ -389,14 +389,14 @@ const Preferences = () => {
     setSelectedPreference(preference);
   };
   useEffect(() => {
-    const storedPreference = sessionStorage.getItem("selectedPreference");
+    const storedPreference = localStorage.getItem("selectedPreference");
     if (storedPreference) {
       setSelectedPreference(JSON.parse(storedPreference));
     }
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       "selectedPreference",
       JSON.stringify(selectedPreference)
     );
