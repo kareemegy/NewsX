@@ -32,6 +32,7 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+// console.log("from auth", auth);
 
 export const signUp = async (email: string, password: string) => {
   try {
@@ -70,14 +71,14 @@ export const signOutUser = async () => {
     console.error(error);
   }
 };
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid = user.uid;
-    console.log("user is sign in");
-  } else {
-    console.log("user is not sign in");
-  }
-});
+//  onAuthStateChanged (auth, (user) => {
+//   if (user) {
+//     const uid = user.uid;
+//     console.log(uid);
+//   } else {
+//     console.log("user is not sign in");
+//   }
+// });
 
 export const storeUserSettings = async (data: any) => {
   const userId = auth.currentUser?.uid;
@@ -97,19 +98,20 @@ export const storeUserSettings = async (data: any) => {
 
 export const getUserSettings = async () => {
   const userId = auth.currentUser?.uid;
+  console.log(userId == null);
   if (userId) {
+    // console.log("Inside user Id ", userId);
     const userRef = doc(db, "users", userId);
     try {
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const userData = docSnap.data();
-        console.log(userData);
         return userData;
       } else {
         console.log("No such document!");
       }
     } catch (error) {
-      console.log("Error getting document:", error);
+      console.error("Error getting document:", error);
     }
   }
 };

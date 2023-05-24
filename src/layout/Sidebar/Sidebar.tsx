@@ -2,8 +2,11 @@ import cn from "classnames";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Heading from "../../components/Heading";
-import SIDEBAR_MENUS from "./news.constants";
 import { useUI } from "../../contexts/UIContext";
+import { useEffect, useRef, useState } from "react";
+import ROUTES_MAP from "../../constants/routes";
+import { auth, getUserSettings } from "../../lib/Firebase/Firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Sidebar = () => {
   const { isMenuShrunk, isSidebarOpen } = useUI();
@@ -39,10 +42,95 @@ export default Sidebar;
 const List = () => {
   const { isMenuShrunk } = useUI();
   const navigate = useNavigate();
+  const [menus, setMenus] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+  const DISCOVER = [
+    {
+      id: 1,
+      title: " Top headlines",
+      icon: "📰",
+      slug: ROUTES_MAP.discover.discover("headlines"),
+    },
+    {
+      id: 2,
+      title: "Trending",
+      icon: "🔥",
+      slug: ROUTES_MAP.discover.discover("trend"),
+    },
+    {
+      id: 3,
+      title: "Most Popular",
+      icon: "👍",
+      slug: ROUTES_MAP.discover.discover("popular"),
+    },
+    {
+      id: 4,
+      title: "Breaking News",
+      icon: "🚨",
+      slug: ROUTES_MAP.discover.discover("breaking News"),
+    },
+  ];
+  const getTopics = async () => {
+    try {
+      // console.log("first line inside getTopics");
+      const userSettings = await getUserSettings();
+      const topics = userSettings?.topics;
+      const topicsArray = topics?.map(({ id, title, icon }: any) => {
+        return {
+          id: id,
+          title: title,
+          icon: icon,
+          slug: ROUTES_MAP.topics.topic(title),
+        };
+      });
+
+      // console.log("Inside GetTopics ", userSettings);
+
+      return topicsArray;
+    } catch (error) {
+      console.error("error", error);
+      return [];
+    }
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const unSubscribe = onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            const TOPICS = await getTopics();
+            const data = [
+              {
+                id: 1,
+                title: "Discover",
+                data: DISCOVER,
+              },
+              {
+                id: 2,
+                title: "Topics",
+                data: TOPICS,
+              },
+            ];
+            setMenus(data);
+            setLoading(false);
+          }
+        });
+
+        return () => unSubscribe();
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <ul className="p-1 mt-10">
-        {SIDEBAR_MENUS.map(({ id, title, data }: any) => (
+        {menus.map(({ id, title, data }: any) => (
           <li className="p-2" key={id}>
             <div
               className={`transition-all ease-out duration-200 ${

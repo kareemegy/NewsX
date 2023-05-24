@@ -1,7 +1,6 @@
 import { INews } from "./news.types";
 import ROUTES_MAP from "../../constants/routes";
 import { getUserSettings } from "../../lib/Firebase/Firebase";
-
 const DISCOVER: INews[] = [
   {
     id: 1,
@@ -43,19 +42,34 @@ const getTopics = async () => {
   return topicsArray;
 };
 
-const TOPICS: INews[] = await getTopics();
+// const TOPICS = await getTopics();
+// const SIDEBAR_MENUS = [
+//   {
+//     id: 1,
+//     title: "Discover",
+//     data: DISCOVER,
+//   },
+//   {
+//     id: 2,
+//     title: "Topics",
+//     data: TOPICS,
+//   },
+// ];
+const SIDEBAR_MENUS = (async () => {
+  const TOPICS = await getTopics();
+  const SIDEBAR_MENUS = [
+    {
+      id: 1,
+      title: "Discover",
+      data: DISCOVER,
+    },
+    {
+      id: 2,
+      title: "Topics",
+      data: TOPICS,
+    },
+  ];
+  return SIDEBAR_MENUS;
+})();
 
-const SIDEBAR_MENUS: any = [
-  {
-    id: 1,
-    title: "Discover",
-    data: DISCOVER,
-  },
-  {
-    id: 2,
-    title: "Topics",
-    data: TOPICS,
-  },
-];
-
-export default SIDEBAR_MENUS;
+// export default SIDEBAR_MENUS;
