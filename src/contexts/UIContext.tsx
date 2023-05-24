@@ -37,12 +37,16 @@ export const UIProvider = ({ children }: IProps) => {
     setIsOverlayOpen(false);
   };
   const [theme, setTheme] = useState(
-    localStorage.getItem("selectedPreference")
-  ) as any;
+    localStorage.getItem("selectedPreference") || "dark"
+  );
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-    localStorage.setItem("selectedPreference", theme);
-    console.log(theme);
+    if (theme === "light") {
+      setTheme("dark");
+      localStorage.setItem("selectedPreference", "dark");
+    } else {
+      setTheme("light");
+      localStorage.setItem("selectedPreference", "light");
+    }
   };
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuShrunk);
