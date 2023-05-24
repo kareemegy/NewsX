@@ -72,7 +72,6 @@ const List = () => {
   ];
   const getTopics = async () => {
     try {
-      // console.log("first line inside getTopics");
       const userSettings = await getUserSettings();
       const topics = userSettings?.topics;
       const topicsArray = topics?.map(({ id, title, icon }: any) => {
@@ -83,9 +82,6 @@ const List = () => {
           slug: ROUTES_MAP.topics.topic(title),
         };
       });
-
-      // console.log("Inside GetTopics ", userSettings);
-
       return topicsArray;
     } catch (error) {
       console.error("error", error);
@@ -141,14 +137,14 @@ const List = () => {
             </div>
 
             <div className="ml-3 mb-3">
-              {data?.map(({ id, icon, title }: any) => (
+              {data?.map(({ id, icon, title, slug }: any) => (
                 <Button
                   className="mb-4 mt-2 whitespace-nowrap"
                   key={id}
                   icon={icon}
                 >
                   <div
-                    onClick={() => navigate(title)}
+                    onClick={() => navigate(slug)}
                     className={`transition-all ease-out duration-200 ${
                       isMenuShrunk ? "opacity-0" : "delay-300 opacity-1"
                     }`}
