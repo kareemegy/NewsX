@@ -62,7 +62,7 @@ const Header = () => {
   };
   const signOutUser = () => {
     signOut(auth);
-    removeLocalStorage
+    removeLocalStorage();
     navigate("/login");
   };
   return (
