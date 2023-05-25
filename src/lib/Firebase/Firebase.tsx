@@ -1,12 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
 
@@ -32,7 +31,7 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-// console.log("from auth", auth);
+export const storage = getStorage(app);
 
 export const signUp = async (email: string, password: string) => {
   try {
@@ -48,7 +47,6 @@ export const signUp = async (email: string, password: string) => {
     return error.code;
   }
 };
-
 export const signIn = async (email: string, password: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -71,14 +69,6 @@ export const signOutUser = async () => {
     console.error(error);
   }
 };
-//  onAuthStateChanged (auth, (user) => {
-//   if (user) {
-//     const uid = user.uid;
-//     console.log(uid);
-//   } else {
-//     console.log("user is not sign in");
-//   }
-// });
 
 export const storeUserSettings = async (data: any) => {
   const userId = auth.currentUser?.uid;
@@ -99,7 +89,6 @@ export const getUserSettings = async () => {
   const userId = auth.currentUser?.uid;
   console.log(userId == null);
   if (userId) {
-    // console.log("Inside user Id ", userId);
     const userRef = doc(db, "users", userId);
     try {
       const docSnap = await getDoc(userRef);
@@ -120,3 +109,27 @@ export const removeLocalStorage = () => {
   localStorage.removeItem("selectedTopics");
   localStorage.removeItem("selectedPreference");
 };
+export const uploadFileToFirebaseStorage = async (file: any) => {
+  const fileRef = ref(storage, `images/${file.name}`);
+  const uploadTask = uploadBytes(fileRef, file);
+  try {
+    await uploadTask;
+    const downloadURL = await getDownloadURL(fileRef);
+    // localStorage.removeItem("uploadedImage");
+    return downloadURL;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error uploading file to Firebase Storage");
+  }
+};
+
+export const getStorageUrl = async (fileName: string) => {
+  const fileRef = ref(storage, `images/${fileName}`);
+  try {
+    const downloadURL = await getDownloadURL(fileRef);
+    return downloadURL;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error uploading file to Firebase Storage");
+  }
+}

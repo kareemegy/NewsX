@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Heading from "../../components/Heading";
 import { useUI } from "../../contexts/UIContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ROUTES_MAP from "../../constants/routes";
 import { auth, getUserSettings } from "../../lib/Firebase/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -23,13 +23,10 @@ const Sidebar = () => {
     >
       <CollapseMenuButton />
       <div
-        className={cn(
-          " h-full overflow-hidden transition-all ease-in-out duration-500  delay-100",
-          {
-            "w-16": isMenuShrunk,
-            "w-60": !isMenuShrunk,
-          }
-        )}
+        className={cn(" h-full overflow-hidden transition-all ease-in-out ", {
+          "w-16": isMenuShrunk,
+          "w-60": !isMenuShrunk,
+        })}
       >
         <List />
       </div>

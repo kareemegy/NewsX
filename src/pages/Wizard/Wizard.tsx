@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import cn from "classnames";
-import { storeUserSettings } from "../../lib/Firebase/Firebase";
+import {
+  storeUserSettings,
+  uploadFileToFirebaseStorage,
+} from "../../lib/Firebase/Firebase";
 import { useNavigate } from "react-router-dom";
 
 const Wizard = () => {
@@ -128,15 +131,26 @@ const Wizard = () => {
 export default Wizard;
 
 const About = () => {
-  const [file, setFile] = useState(null);
-  // send to fore store and get from there
+  const [file, setFile] = useState<any>(null);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     address: "",
   });
-  const handleFileChange = (event: any) => {
-    setFile(event.target.files[0]);
+
+  const handleFileChange = async (event: any) => {
+    const file = event.target.files[0];
+    setFile(file);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const fileDataUrl: any = reader.result;
+      localStorage.setItem("uploadedImage", fileDataUrl);
+      setFile(fileDataUrl);
+    };
   };
 
   const handleInputChange = (event: any) => {
@@ -149,14 +163,23 @@ const About = () => {
 
   useEffect(() => {
     const storedFormData = localStorage.getItem("formData");
+    const storedImageDataUrl = localStorage.getItem("uploadedImage");
+
     if (storedFormData) {
       setFormData(JSON.parse(storedFormData));
+    }
+
+    if (storedImageDataUrl) {
+      setFile(storedImageDataUrl);
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(formData));
-  }, [formData]);
+    if (file !== null) {
+      localStorage.setItem("uploadedImage", file);
+    }
+  }, [formData, file]);
 
   return (
     <div className="shadow-2xl p-5 h-[450px] w-[750px] ">
@@ -176,7 +199,7 @@ const About = () => {
               {file ? (
                 <img
                   className="w-[200px] h-[200px] rounded-xl cursor-pointer"
-                  src={URL.createObjectURL(file)}
+                  src={file || localStorage.getItem("uploadedImage")}
                   alt="uploaded file"
                 />
               ) : (
@@ -190,6 +213,7 @@ const About = () => {
             <input
               id="file-input"
               type="file"
+              name="file"
               className="hidden"
               onChange={handleFileChange}
             />
