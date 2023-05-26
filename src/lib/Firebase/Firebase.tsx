@@ -1,7 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadString,
+} from "firebase/storage";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -109,13 +115,16 @@ export const removeLocalStorage = () => {
   localStorage.removeItem("selectedTopics");
   localStorage.removeItem("selectedPreference");
 };
-export const uploadFileToFirebaseStorage = async (file: any) => {
-  const fileRef = ref(storage, `images/${file.name}`);
-  const uploadTask = uploadBytes(fileRef, file);
+
+export const uploadFileToFirebaseStorage = async (
+  fileDataUrl: any,
+  fileName: any
+) => {
+  const fileRef = ref(storage, `images/${fileName}`);
+  const uploadTask = uploadString(fileRef, fileDataUrl, "data_url");
   try {
     await uploadTask;
     const downloadURL = await getDownloadURL(fileRef);
-    // localStorage.removeItem("uploadedImage");
     return downloadURL;
   } catch (error) {
     console.error(error);
@@ -123,13 +132,31 @@ export const uploadFileToFirebaseStorage = async (file: any) => {
   }
 };
 
-export const getStorageUrl = async (fileName: string) => {
-  const fileRef = ref(storage, `images/${fileName}`);
-  try {
-    const downloadURL = await getDownloadURL(fileRef);
-    return downloadURL;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error uploading file to Firebase Storage");
+export const getFileDataFromLocalStorage = () => {
+  const uploadedImageBase64 = localStorage.getItem("uploadedImage");
+  if (!uploadedImageBase64) {
+    throw new Error("File data not found in local storage");
   }
-}
+  const byteCharacters = window.atob(uploadedImageBase64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const decoder = new TextDecoder("utf-8");
+  const blob = new Blob([decoder.decode(byteArray)], { type: "image/jpeg" });
+  const fileDataUrl = URL.createObjectURL(blob);
+  return fileDataUrl;
+};
+
+export const generateFileName = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+  const userId = user.uid;
+  const fileName = userId;
+
+  return fileName;
+};

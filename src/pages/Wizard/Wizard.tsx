@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import cn from "classnames";
 import {
+  generateFileName,
+  getFileDataFromLocalStorage,
   storeUserSettings,
   uploadFileToFirebaseStorage,
 } from "../../lib/Firebase/Firebase";
@@ -17,17 +19,26 @@ const Wizard = () => {
     setActiveButton(newStep);
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (step === 3) {
       const storedFormData = localStorage.getItem("formData");
       const storedTopics = localStorage.getItem("selectedTopics");
       const storedPreference = localStorage.getItem("selectedPreference");
+      const uploadedImg: any = localStorage.getItem("uploadedImage");
       if (storedFormData && storedTopics && storedPreference) {
         storeUserSettings({
           ...JSON.parse(storedFormData),
           topics: JSON.parse(storedTopics),
           preference: JSON.parse(storedPreference),
         });
+      }
+      if (uploadedImg) {
+        const fileName = generateFileName();
+        const downloadURL = await uploadFileToFirebaseStorage(
+          uploadedImg,
+          fileName
+        );
+        console.log(downloadURL);
       }
       navigate("/dashboard");
     }
