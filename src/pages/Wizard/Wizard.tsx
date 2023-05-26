@@ -3,7 +3,6 @@ import Button from "../../components/button/button";
 import cn from "classnames";
 import {
   generateFileName,
-  getFileDataFromLocalStorage,
   storeUserSettings,
   uploadFileToFirebaseStorage,
 } from "../../lib/Firebase/Firebase";

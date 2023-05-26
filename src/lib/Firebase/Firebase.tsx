@@ -132,22 +132,6 @@ export const uploadFileToFirebaseStorage = async (
   }
 };
 
-export const getFileDataFromLocalStorage = () => {
-  const uploadedImageBase64 = localStorage.getItem("uploadedImage");
-  if (!uploadedImageBase64) {
-    throw new Error("File data not found in local storage");
-  }
-  const byteCharacters = window.atob(uploadedImageBase64);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
-  const decoder = new TextDecoder("utf-8");
-  const blob = new Blob([decoder.decode(byteArray)], { type: "image/jpeg" });
-  const fileDataUrl = URL.createObjectURL(blob);
-  return fileDataUrl;
-};
 
 export const generateFileName = () => {
   const auth = getAuth();
