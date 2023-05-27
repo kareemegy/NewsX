@@ -1,5 +1,4 @@
-import {
-  useRoutes } from "react-router-dom";
+import { Navigate, Route, Routes, useRoutes } from "react-router-dom";
 import Home from "./pages/home/home";
 import ROUTES_MAP from "./constants/routes";
 import Discover from "./pages/Discover";
@@ -9,9 +8,19 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Wizard from "./pages/Wizard";
+import { auth } from "./lib/Firebase/Firebase";
+// import Protected from "./components/Protected/Protected";
+const ProtectedRoute = ({ authUser, children }: any) => {
+  if (!authUser) {
+    return <Navigate to="/login" />;
+  }
 
+  return children;
+};
 const Layout = () => {
-  const appRoutes = useRoutes([
+  const authUser = auth.currentUser;
+
+  const routes = useRoutes([
     {
       path: ROUTES_MAP.home,
       element: <Home />,
@@ -30,7 +39,7 @@ const Layout = () => {
     },
     {
       path: ROUTES_MAP.dashboard,
-      element: <Dashboard />,
+      element: authUser ? <Dashboard /> : <Navigate to="/login" />,
       children: [
         {
           path: ROUTES_MAP.discover.discover(":type"),
@@ -47,7 +56,7 @@ const Layout = () => {
       ],
     },
   ]);
-  return appRoutes;
+  return routes;
 };
 
 export default Layout;

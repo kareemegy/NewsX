@@ -132,7 +132,6 @@ export const uploadFileToFirebaseStorage = async (
   }
 };
 
-
 export const generateFileName = () => {
   const auth = getAuth();
   const user = auth.currentUser;
