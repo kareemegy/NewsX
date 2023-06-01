@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import Home from "./pages/home/home";
 import ROUTES_MAP from "./constants/routes";
 import Discover from "./pages/Discover";
@@ -9,17 +9,18 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Wizard from "./pages/Wizard";
 import { auth } from "./lib/Firebase/Firebase";
-// import Protected from "./components/Protected/Protected";
-const ProtectedRoute = ({ authUser, children }: any) => {
-  if (!authUser) {
-    return <Navigate to="/login" />;
+
+const ProtectedRoute = ({ Component, redirect }: any) => {
+  const { currentUser } = auth;
+  if (currentUser) {
+    return <Component />;
+  } else {
+    return <Navigate to={`/${redirect}`} />;
   }
-
-  return children;
 };
-const Layout = () => {
-  const authUser = auth.currentUser;
 
+const Layout = () => {
+  const { currentUser } = auth;
   const routes = useRoutes([
     {
       path: ROUTES_MAP.home,
@@ -39,7 +40,7 @@ const Layout = () => {
     },
     {
       path: ROUTES_MAP.dashboard,
-      element: authUser ? <Dashboard /> : <Navigate to="/login" />,
+      element: currentUser ? <Dashboard /> : <Navigate to="/login" />,
       children: [
         {
           path: ROUTES_MAP.discover.discover(":type"),

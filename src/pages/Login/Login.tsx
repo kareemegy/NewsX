@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../lib/Firebase/Firebase";
 import Button from "../../components/button/button";
@@ -7,6 +7,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
   const handleEmailInput = (event: any) => {
     setEmail(event.target.value);
   };
@@ -31,6 +37,7 @@ const Login = () => {
     navigate("/dashboard");
     console.log(user);
   };
+
   return (
     <>
       <div className="container m-auto p-4 h-[100vh] flex flex-col items-center justify-center">
@@ -47,6 +54,7 @@ const Login = () => {
           name="email"
           value={email}
           onChange={handleEmailInput}
+          ref={inputRef}
         />
         <input
           className="inline-block bg-slate-200 my-3 p-3 rounded w-[300px]"

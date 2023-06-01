@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { auth, signUp } from "../../lib/Firebase/Firebase";
 
 const Register = () => {
@@ -8,6 +8,12 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   console.log(auth.currentUser);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
   const handleEmailInput = (event: any) => {
     setEmail(event.target.value);
   };
@@ -49,6 +55,7 @@ const Register = () => {
           name="email"
           value={email}
           onChange={handleEmailInput}
+          ref={inputRef}
         />
         <input
           className="inline-block bg-slate-200 my-3 p-3 rounded w-[300px] "
