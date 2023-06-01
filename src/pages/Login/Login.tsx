@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -23,7 +24,6 @@ const Login = () => {
     if (email === "" || password === "") {
       return alert("Please fill in all fields");
     }
-
     const user = await signIn(email, password);
     if (user === "auth/wrong-password") {
       return alert("Wrong password");
@@ -31,10 +31,13 @@ const Login = () => {
     if (user === "auth/invalid-email") {
       return alert("invalid-email");
     }
-
+    if (user) {
+      localStorage.setItem("authToken", user);
+    }
     setEmail("");
     setPassword("");
     navigate("/dashboard");
+
     console.log(user);
   };
 

@@ -5,7 +5,6 @@ import {
   getDownloadURL,
   getStorage,
   ref,
-  uploadBytes,
   uploadString,
 } from "firebase/storage";
 import {
@@ -13,6 +12,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  setPersistence,
+  browserSessionPersistence,
 } from "firebase/auth";
 
 interface IConfig {
@@ -38,7 +39,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-
+setPersistence(auth, browserSessionPersistence);
 export const signUp = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -114,6 +115,7 @@ export const removeLocalStorage = () => {
   localStorage.removeItem("formData");
   localStorage.removeItem("selectedTopics");
   localStorage.removeItem("selectedPreference");
+  localStorage.removeItem("authToken");
 };
 
 export const uploadFileToFirebaseStorage = async (

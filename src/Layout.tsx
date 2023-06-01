@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from "react-router-dom";
+import { Navigate, useNavigate, useRoutes } from "react-router-dom";
 import Home from "./pages/home/home";
 import ROUTES_MAP from "./constants/routes";
 import Discover from "./pages/Discover";
@@ -8,19 +8,9 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Wizard from "./pages/Wizard";
-import { auth } from "./lib/Firebase/Firebase";
-
-const ProtectedRoute = ({ Component, redirect }: any) => {
-  const { currentUser } = auth;
-  if (currentUser) {
-    return <Component />;
-  } else {
-    return <Navigate to={`/${redirect}`} />;
-  }
-};
-
 const Layout = () => {
-  const { currentUser } = auth;
+  const authUser = localStorage.getItem("authToken");
+
   const routes = useRoutes([
     {
       path: ROUTES_MAP.home,
@@ -28,19 +18,19 @@ const Layout = () => {
     },
     {
       path: ROUTES_MAP.login,
-      element: <Login />,
+      element: authUser ? <Navigate to="/dashboard" /> : <Login />,
     },
     {
       path: ROUTES_MAP.register,
-      element: <Register />,
+      element: authUser ? <Navigate to="/dashboard" /> : <Register />,
     },
     {
       path: ROUTES_MAP.wizard,
-      element: <Wizard />,
+      element: authUser ? <Navigate to="/dashboard" /> : <Wizard />,
     },
     {
       path: ROUTES_MAP.dashboard,
-      element: currentUser ? <Dashboard /> : <Navigate to="/login" />,
+      element: authUser ? <Dashboard /> : <Navigate to="/login" />,
       children: [
         {
           path: ROUTES_MAP.discover.discover(":type"),
