@@ -20,7 +20,7 @@ const Login = () => {
   const handlePasswordInput = (event: any) => {
     setPassword(event.target.value);
   };
-  const handleSignUp = async () => {
+  const handleSignIn = async () => {
     if (email === "" || password === "") {
       return alert("Please fill in all fields");
     }
@@ -68,7 +68,7 @@ const Login = () => {
           onChange={handlePasswordInput}
         />
         <Button
-          handleClick={handleSignUp}
+          handleClick={handleSignIn}
           className="bg-blue px-8 py-3 rounded-md text-xl text-white mb-6"
         >
           Sign In
