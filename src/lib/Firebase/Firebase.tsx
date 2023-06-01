@@ -145,3 +145,11 @@ export const generateFileName = () => {
 
   return fileName;
 };
+export const checkIfDocExists = async (
+  collectionName: string,
+  documentId: string
+) => {
+  const docRef = doc(db, collectionName, documentId);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists();
+};

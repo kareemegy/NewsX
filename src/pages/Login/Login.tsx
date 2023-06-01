@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signIn } from "../../lib/Firebase/Firebase";
+import { auth, checkIfDocExists, signIn } from "../../lib/Firebase/Firebase";
 import Button from "../../components/button/button";
 
 const Login = () => {
@@ -25,20 +25,23 @@ const Login = () => {
       return alert("Please fill in all fields");
     }
     const user = await signIn(email, password);
+
     if (user === "auth/wrong-password") {
       return alert("Wrong password");
     }
     if (user === "auth/invalid-email") {
       return alert("invalid-email");
     }
-    if (user) {
-      localStorage.setItem("authToken", user);
-    }
-    setEmail("");
-    setPassword("");
-    navigate("/dashboard");
 
-    console.log(user);
+    auth.onAuthStateChanged(async (user: any) => {
+      const IsUserCompleteTheWizard = await checkIfDocExists("users", user.uid);
+      if (!IsUserCompleteTheWizard) {
+        navigate("/wizard");
+        return;
+      }
+      navigate("/dashboard");
+      return;
+    });
   };
 
   return (
