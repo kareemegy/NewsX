@@ -9,8 +9,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Wizard from "./pages/Wizard";
 const Layout = () => {
-  const authUser = localStorage.getItem("authToken");
-
   const routes = [
     {
       path: ROUTES_MAP.home,
@@ -18,31 +16,19 @@ const Layout = () => {
     },
     {
       path: ROUTES_MAP.login,
-      element: renderIfNotAuthenticated(
-        authUser,
-        <Login />,
-        ROUTES_MAP.dashboard
-      ),
+      element: renderIfNotAuthenticated(<Login />, ROUTES_MAP.dashboard),
     },
     {
       path: ROUTES_MAP.register,
-      element: renderIfNotAuthenticated(
-        authUser,
-        <Register />,
-        ROUTES_MAP.dashboard
-      ),
+      element: renderIfNotAuthenticated(<Register />, ROUTES_MAP.dashboard),
     },
     {
       path: ROUTES_MAP.wizard,
-      element: renderIfNotAuthenticated(
-        authUser,
-        <Wizard />,
-        ROUTES_MAP.dashboard
-      ),
+      element: renderIfNotAuthenticated(<Wizard />, ROUTES_MAP.dashboard),
     },
     {
       path: ROUTES_MAP.dashboard,
-      element: renderIfAuthenticated(authUser, <Dashboard />, ROUTES_MAP.login),
+      element: renderIfAuthenticated(<Dashboard />, ROUTES_MAP.login),
       children: [
         {
           path: ROUTES_MAP.discover.discover(":type"),
@@ -63,18 +49,19 @@ const Layout = () => {
   return useRoutes(routes);
 };
 const renderIfAuthenticated = (
-  authUser: string | null,
   component: JSX.Element,
   redirectPath: string
 ): JSX.Element => {
+  const authUser = localStorage.getItem("authToken");
+  console.log(authUser);
   return authUser ? component : <Navigate to={redirectPath} />;
 };
 
 const renderIfNotAuthenticated = (
-  authUser: string | null,
   component: JSX.Element,
   redirectPath: string
 ): JSX.Element => {
+  const authUser = localStorage.getItem("authToken");
   return authUser ? <Navigate to={redirectPath} /> : component;
 };
 
