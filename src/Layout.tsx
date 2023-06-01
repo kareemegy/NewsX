@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useRoutes } from "react-router-dom";
+import { Navigate, Route, useNavigate, useRoutes } from "react-router-dom";
 import Home from "./pages/home/home";
 import ROUTES_MAP from "./constants/routes";
 import Discover from "./pages/Discover";
@@ -11,26 +11,38 @@ import Wizard from "./pages/Wizard";
 const Layout = () => {
   const authUser = localStorage.getItem("authToken");
 
-  const routes = useRoutes([
+  const routes = [
     {
       path: ROUTES_MAP.home,
       element: <Home />,
     },
     {
       path: ROUTES_MAP.login,
-      element: authUser ? <Navigate to="/dashboard" /> : <Login />,
+      element: renderIfNotAuthenticated(
+        authUser,
+        <Login />,
+        ROUTES_MAP.dashboard
+      ),
     },
     {
       path: ROUTES_MAP.register,
-      element: authUser ? <Navigate to="/dashboard" /> : <Register />,
+      element: renderIfNotAuthenticated(
+        authUser,
+        <Register />,
+        ROUTES_MAP.dashboard
+      ),
     },
     {
       path: ROUTES_MAP.wizard,
-      element: authUser ? <Navigate to="/dashboard" /> : <Wizard />,
+      element: renderIfNotAuthenticated(
+        authUser,
+        <Wizard />,
+        ROUTES_MAP.dashboard
+      ),
     },
     {
       path: ROUTES_MAP.dashboard,
-      element: authUser ? <Dashboard /> : <Navigate to="/login" />,
+      element: renderIfAuthenticated(authUser, <Dashboard />, ROUTES_MAP.login),
       children: [
         {
           path: ROUTES_MAP.discover.discover(":type"),
@@ -46,8 +58,24 @@ const Layout = () => {
         },
       ],
     },
-  ]);
-  return routes;
+  ];
+
+  return useRoutes(routes);
+};
+const renderIfAuthenticated = (
+  authUser: string | null,
+  component: JSX.Element,
+  redirectPath: string
+): JSX.Element => {
+  return authUser ? component : <Navigate to={redirectPath} />;
+};
+
+const renderIfNotAuthenticated = (
+  authUser: string | null,
+  component: JSX.Element,
+  redirectPath: string
+): JSX.Element => {
+  return authUser ? <Navigate to={redirectPath} /> : component;
 };
 
 export default Layout;
